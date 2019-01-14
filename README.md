@@ -6,7 +6,8 @@
 
 # TaxiApp (MCM 2018/19 @IPG)
 
-> Subtitle or Short Description Goes Here
+> com MVVM
+![architectura](https://user-images.githubusercontent.com/2634610/51136010-5a5db480-1833-11e9-8da3-8ff2500b6ed1.png)
 
 > ideally one sentence
 
