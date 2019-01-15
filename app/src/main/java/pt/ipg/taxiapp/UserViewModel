@@ -35,7 +35,7 @@ public class UserViewModel extends AndroidViewModel {
         repository.deleteAllUsers();
     }
 
-    public LiveData<List<User>> getAllNotes() {
+    public LiveData<List<User>> getAllUsers() {
         return allUsers;
     }
 
