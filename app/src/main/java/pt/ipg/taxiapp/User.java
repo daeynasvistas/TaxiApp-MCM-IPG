@@ -8,16 +8,16 @@ public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String Nome;
-    private String Email;
-    private String Foto;
-    private int Star;
+    private String nome;
+    private String email;
+    private String foto;
+    private int star;
 
     public User(String nome, String email, String foto, int star) {
-        Nome = nome;
-        Email = email;
-        Foto = foto;
-        Star = star;
+        this.nome = nome;
+        this.email = email;
+        this.foto = foto;
+        this.star = star;
     }
 
     public void setId(int id) {
@@ -29,18 +29,18 @@ public class User {
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public String getFoto() {
-        return Foto;
+        return foto;
     }
 
     public int getStar() {
-        return Star;
+        return star;
     }
 }
