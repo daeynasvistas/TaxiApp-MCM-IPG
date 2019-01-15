@@ -32,7 +32,7 @@ public class UserRepository {
 
     }
 
-    public void deleteAllUsers(User user){
+    public void deleteAllUsers(){
         new DeleteAllUserAsyncTask(userDao).execute();
 
     }
