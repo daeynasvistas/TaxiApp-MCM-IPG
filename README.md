@@ -7,8 +7,12 @@
 - [x] Repository
 - [ ] LoginView
 - [ ] SettingView
-- [ ] MainView
+- [x] MainView
 - [ ] ApiService
+
+## Vers. O.1
+![0_1](https://user-images.githubusercontent.com/2634610/51442383-ed836800-1cd3-11e9-9a21-8315abac7330.png)
+
 
 ## Database created with Room
 ![basedados](https://user-images.githubusercontent.com/2634610/51177117-ab62bc80-18b6-11e9-95c8-11c688a05cdc.PNG)
