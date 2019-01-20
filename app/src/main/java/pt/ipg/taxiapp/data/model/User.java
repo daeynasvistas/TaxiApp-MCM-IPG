@@ -1,4 +1,4 @@
-package pt.ipg.taxiapp;
+package pt.ipg.taxiapp.data.model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

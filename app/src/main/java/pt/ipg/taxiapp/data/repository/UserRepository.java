@@ -1,11 +1,14 @@
-package pt.ipg.taxiapp;
+package pt.ipg.taxiapp.data.repository;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
-import android.service.autofill.UserData;
 
 import java.util.List;
+
+import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.persistance.dao.UserDao;
+import pt.ipg.taxiapp.data.persistance.local.UserDatabase;
 
 public class UserRepository {
     private UserDao userDao;

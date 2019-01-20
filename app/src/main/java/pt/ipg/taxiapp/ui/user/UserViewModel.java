@@ -1,4 +1,4 @@
-package pt.ipg.taxiapp;
+package pt.ipg.taxiapp.ui.user;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
@@ -6,6 +6,9 @@ import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 
 import java.util.List;
+
+import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.repository.UserRepository;
 
 public class UserViewModel extends AndroidViewModel {
     private UserRepository repository;

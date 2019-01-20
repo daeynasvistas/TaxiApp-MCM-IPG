@@ -1,4 +1,4 @@
-package pt.ipg.taxiapp;
+package pt.ipg.taxiapp.ui.main;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import java.util.List;
+
+import pt.ipg.taxiapp.R;
+import pt.ipg.taxiapp.ui.user.UserAdapter;
+import pt.ipg.taxiapp.ui.user.UserViewModel;
+import pt.ipg.taxiapp.data.model.User;
 
 public class MainActivity extends AppCompatActivity {
     private UserViewModel userViewModel;

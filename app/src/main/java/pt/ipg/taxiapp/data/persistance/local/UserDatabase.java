@@ -1,4 +1,4 @@
-package pt.ipg.taxiapp;
+package pt.ipg.taxiapp.data.persistance.local;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -8,7 +8,10 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = User.class,version = 1)
+import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.persistance.dao.UserDao;
+
+@Database(entities = {User.class},version = 1, exportSchema = false)
 public abstract class UserDatabase extends RoomDatabase {
 
     private static UserDatabase instance;
