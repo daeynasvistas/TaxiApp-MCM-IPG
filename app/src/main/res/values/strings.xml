@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TaxiApp @MCM ipg.pt</string>
+
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyANiiPG6jj3iGe94mzVWFPX2Z0AwtZs4VI
+    </string>
+
+
+    <string name="about_text"> Exemplo de About .. </string>
+    <string name="navigation_open">Abrir Navegação</string>
+    <string name="navigation_close">Fechar Navegação</string>
+
+    <!--menu title-->
+    <string name="title_about">Sobre</string>
+    <string name="Economico">Económico</string>
+    <string name="Null">Nenhum</string>
+    <string name="PAGAMENTO">PAGAMENTO</string>
+    <string name="Cash">Dinheiro</string>
+    <string name="PEDIR_TAXI">CHAMAR TAXI</string>
 </resources>

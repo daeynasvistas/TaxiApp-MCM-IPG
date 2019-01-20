@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#F7CE00</color>
-    <color name="colorPrimaryDark">#E6C312</color>
-    <color name="colorPrimaryLight">#FFD500</color>
+    <color name="colorPrimary">#FDE74C</color>
+    <color name="colorPrimaryDark">#FA7921</color>
+    <color name="colorPrimaryLight">#5BC0EB</color>
 
     <color name="colorAccent">#302D2D</color>
     <color name="colorAccentDark">#292727</color>
@@ -19,8 +19,14 @@
     <color name="grey_text">#222D31</color>
     <color name="price_color">#8BC34A</color>
 
-    <color name="ongoing_color">#F7CE00</color>
+    <color name="ongoing_color">#F1FAEE</color>
     <color name="finished_color">#8BC34A</color>
     <color name="canceled_color">#96989A</color>
 
+
 </resources>
+
+    <!-- Daey escolhi daqui REVER!! https://coolors.co/browser/latest/1
+    VERS 0.1 : https://coolors.co/app/5bc0eb-fde74c-9bc53d-e55934-fa7921
+
+    -->
