@@ -8,20 +8,20 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import pt.ipg.taxiapp.data.model.User;
-import pt.ipg.taxiapp.data.persistance.dao.UserDao;
+import pt.ipg.taxiapp.data.model.Taxi;
+import pt.ipg.taxiapp.data.persistance.dao.TaxiDao;
 
-@Database(entities = {User.class},version = 1, exportSchema = false)
-public abstract class UserDatabase extends RoomDatabase {
+@Database(entities = {Taxi.class},version = 1, exportSchema = false)
 
-    private static UserDatabase instance;
 
-    public abstract UserDao userDao();
+public abstract class TaxiAppDatabase extends RoomDatabase {
+    private static TaxiAppDatabase instance;
+    public abstract TaxiDao taxiDao();
 
-    public static synchronized UserDatabase getInstance(Context context){
+    public static synchronized TaxiAppDatabase getInstance(Context context){
         if (instance == null){
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    UserDatabase.class, "user_database")
+                    TaxiAppDatabase.class, "taxi_database")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack) // Populate database seeding
                     .build();
@@ -38,16 +38,21 @@ public abstract class UserDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void>{ // <-----------Seeding
 
-        private UserDao userDao;
-        private PopulateDbAsyncTask(UserDatabase db){
-            userDao = db.userDao();
+        private TaxiDao taxiDao;
+        private PopulateDbAsyncTask(TaxiAppDatabase db){
+            taxiDao = db.taxiDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            userDao.insert(new User("Daniel Mendes", "Daniel@ept.pt", "foto(alterar)", 0));
-            userDao.insert(new User("António Sousa", "Sousa@ept.pt", "foto_sousa(alterar)", 0));
-            userDao.insert(new User("Maria da Silva", "m.silva@ept.pt", "foto(alterar)", 0));
+            taxiDao.update(new Taxi(
+                    0,
+                    "Daniel Mendes",
+                    "Daniel@ept.pt",
+                    "foto(alterar)",
+                    0,
+                    "40.777198",
+                    "-7.350320"));
 
             return null;
         }

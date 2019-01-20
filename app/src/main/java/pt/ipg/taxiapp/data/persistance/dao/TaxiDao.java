@@ -9,24 +9,24 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.model.Taxi;
 
 @Dao
-public interface UserDao {
+public interface TaxiDao {
 
     @Insert
-    void insert(User user);
+    void insert(Taxi taxi);
 
     @Update
-    void update(User user);
+    void update(Taxi taxi);
 
     @Delete
-    void delete(User user);
+    void delete(Taxi taxi);
 
-    @Query("DELETE FROM user_table")
-    void deleteAllUsers();
+    @Query("DELETE FROM taxi_table")
+    void deleteAllTaxis();
 
-    @Query("SELECT * FROM USER_TABLE")
-    LiveData<List<User>> getAllUsers();
+    @Query("SELECT * FROM TAXI_TABLE")
+    LiveData<List<Taxi>> getAllTaxis();
 
 }

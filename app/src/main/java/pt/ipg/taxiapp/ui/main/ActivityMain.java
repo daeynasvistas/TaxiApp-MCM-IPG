@@ -3,7 +3,6 @@ package pt.ipg.taxiapp.ui.main;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -13,13 +12,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.widget.ImageView;
 
 
@@ -35,13 +31,11 @@ import com.google.maps.model.LatLng;
 import java.util.List;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.ui.user.UserAdapter;
-import pt.ipg.taxiapp.ui.user.UserViewModel;
-import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class ActivityMain extends AppCompatActivity {
-    private UserViewModel userViewModel;
+    private TaxiViewModel taxiViewModel;
 
     private Toolbar toolbar;
     private ActionBar actionBar;
@@ -69,15 +63,16 @@ public class ActivityMain extends AppCompatActivity {
 
         final UserAdapter adapter = new UserAdapter();
         recyclerView.setAdapter(adapter);
+*/
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getAllUsers().observe(this, new Observer<List<User>>() {
+        taxiViewModel = ViewModelProviders.of(this).get(TaxiViewModel.class);
+        taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
             @Override
-            public void onChanged(@Nullable List<User> users) {
-                adapter.setUsers(users);
+            public void onChanged(@Nullable List<Taxi> taxis) {
+           //     adapter.setTaxis(users);
             }
         });
-        */
+
 
 
 

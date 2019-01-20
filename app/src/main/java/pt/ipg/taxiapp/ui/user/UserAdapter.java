@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.model.Taxi;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
-    private List<User> users = new ArrayList<>();
+    private List<Taxi> taxis = new ArrayList<>();
 
     @NonNull
     @Override
@@ -26,19 +26,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserHolder holder, int position) {
-        User currentUser = users.get(position);
-        holder.textViewNome.setText(currentUser.getNome());
-        holder.textViewEmail.setText(currentUser.getEmail());
-        holder.textViewStar.setText(String.valueOf(currentUser.getStar()));
+        Taxi currentTaxi = taxis.get(position);
+        holder.textViewNome.setText(currentTaxi.getNome());
+        holder.textViewEmail.setText(currentTaxi.getEmail());
+        holder.textViewStar.setText(String.valueOf(currentTaxi.getStar()));
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return taxis.size();
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setTaxis(List<Taxi> taxis) {
+        this.taxis = taxis;
         notifyDataSetChanged();
     }
 
