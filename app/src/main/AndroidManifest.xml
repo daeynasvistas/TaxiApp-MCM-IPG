@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pt.ipg.taxiapp">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,19 +16,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+            <activity android:name=".ui.splash.ActivitySplash"
+                android:theme="@style/SplashTheme">
+                    <intent-filter>
+                        <action android:name="android.intent.action.MAIN" />
+                        <category android:name="android.intent.category.LAUNCHER" />
+                    </intent-filter>
+            </activity>
 
-        <activity android:name=".ui.main.ActivitySplash">
+           <activity
+            android:name=".ui.authentication.MainEmptyActivity"
+               android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
-        <activity android:name=".ui.main.ActivityMain" />
+
+        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".ui.authentication.LoginActivity" />
     </application>
 
 </manifest>

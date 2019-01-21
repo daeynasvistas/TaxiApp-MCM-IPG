@@ -255,6 +255,9 @@ public class Tools {
     }
 
 
+    public static String getToken() {
 
+        return null;
+    }
 }
 

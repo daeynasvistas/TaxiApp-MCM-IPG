@@ -48,7 +48,7 @@ import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.utils.Tools;
 
-public class ActivityMain extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
     private TaxiViewModel taxiViewModel;
 
     private Toolbar toolbar;
@@ -164,7 +164,7 @@ public class ActivityMain extends AppCompatActivity {
         taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
             @Override
             public void onChanged(@Nullable List<Taxi> taxis) {
-                //    Tools.displayCarAroundMarkers(ActivityMain.this, mMap);
+                //    Tools.displayCarAroundMarkers(MainActivity.this, mMap);
                 // update o mapa com novos Taxis .. Vers.0.4
                 int size = taxiViewModel.getAllTaxis().getValue().size();
                 Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
@@ -179,7 +179,7 @@ public class ActivityMain extends AppCompatActivity {
                 drawPolyLine(origin, destination);
 
                 for (TaxiPosition c : items) {
-                     displayMarker(ActivityMain.this, mMap, c);
+                     displayMarker(MainActivity.this, mMap, c);
                  }
 
             }

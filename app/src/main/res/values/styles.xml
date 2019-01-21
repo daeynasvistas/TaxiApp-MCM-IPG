@@ -1,5 +1,14 @@
 <resources>
 
+<!--// super splash
+    //https://android.jlelse.eu/launch-screen-in-android-the-right-way-aca7e8c31f52 -->
+
+        <style name="SplashTheme" parent="AppTheme">
+            <item name="android:windowBackground">@drawable/splash</item>
+        </style>
+
+
+
     <style name="AppTheme" parent="BaseTheme" />
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -30,4 +39,14 @@
     <style name="RippleStyleBlack" parent="RippleStyleWhite">
         <item name="mrl_rippleColor">#8096989A</item>
     </style>
+
+
+
+    <!--TextInputLayout Mais bonito style-->
+    <style name="TextAppearance.App.TextInputLayout"
+        parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
+    </style>TextAppearance
 </resources>
