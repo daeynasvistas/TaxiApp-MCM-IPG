@@ -1,4 +1,4 @@
-package pt.ipg.taxiapp.ui.user;
+package pt.ipg.taxiapp.ui.main;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Taxi;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
+public class TaxiAdapter extends RecyclerView.Adapter<TaxiAdapter.UserHolder> {
     private List<Taxi> taxis = new ArrayList<>();
 
     @NonNull

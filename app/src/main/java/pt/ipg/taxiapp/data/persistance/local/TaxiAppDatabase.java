@@ -8,12 +8,15 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.maps.model.LatLng;
+
+
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.persistance.dao.TaxiDao;
+import pt.ipg.taxiapp.utils.Tools;
+
 
 @Database(entities = {Taxi.class},version = 1, exportSchema = false)
-
-
 public abstract class TaxiAppDatabase extends RoomDatabase {
     private static TaxiAppDatabase instance;
     public abstract TaxiDao taxiDao();
@@ -45,17 +48,14 @@ public abstract class TaxiAppDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            taxiDao.update(new Taxi(
-                    0,
-                    "Daniel Mendes",
-                    "Daniel@ept.pt",
-                    "foto(alterar)",
-                    0,
-                    "40.777198",
-                    "-7.350320"));
-
+            LatLng point = new LatLng(40.777570, -7.349922);
+            for(int i=0;i<50;i++){
+                LatLng randPin = Tools.getRandomLocation(point,2500);
+                taxiDao.insert(new Taxi("Daniel Mendes","Daniel@ept.pt","foto(alterar)",0,randPin.latitude,randPin.longitude));
+            }
             return null;
         }
+
 
 
     }

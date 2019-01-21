@@ -1,5 +1,6 @@
 package pt.ipg.taxiapp.data.model;
 
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -11,12 +12,12 @@ public class Taxi {
     private String email;
     private String foto;
     private int star;
-    private String lat; // Melhor metodo até aqora .. unificar lat e long
-    private String lng;
+    private Double lat; // Melhor metodo até aqora .. unificar lat e long
+    private Double lng;
 
 
-    public Taxi(int id, String nome, String email, String foto, int star, String lat, String lng) {
-        this.id = id;
+
+    public Taxi(String nome, String email, String foto, int star, Double lat, Double lng) {
         this.nome = nome;
         this.email = email;
         this.foto = foto;
@@ -24,7 +25,6 @@ public class Taxi {
         this.lat = lat;
         this.lng = lng;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -50,11 +50,11 @@ public class Taxi {
         return star;
     }
 
-    public String getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public String getLng() {
+    public Double getLng() {
         return lng;
     }
 }

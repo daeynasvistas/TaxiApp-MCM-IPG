@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--dummy data ALTERAR para base dados-->
+    <string-array name="car_location">
+        <item>40.777198#-7.356920</item>
+        <item>40.757658#-7.35710</item>
+        <item>40.767138#-7.352920</item>
+        <item>40.717148#-7.354820</item>
+        <item>40.737168#-7.357420</item>
+
+        <item>40.757598#-7.359280</item>
+        <item>40.787398#-7.353370</item>
+        <item>40.797498#-7.354330</item>
+        <item>40.727598#-7.351350</item>
+        <item>40.727598#-7.357360</item>
+    </string-array>
+
+
+
+</resources>

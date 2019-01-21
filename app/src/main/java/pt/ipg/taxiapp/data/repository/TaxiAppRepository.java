@@ -22,6 +22,7 @@ public class TaxiAppRepository {
     }
 
     public void insert(Taxi taxi){
+
         new InsertTaxiAsyncTask(taxiDao).execute(taxi);
     }
 
@@ -47,6 +48,7 @@ public class TaxiAppRepository {
     public LiveData<List<Taxi>> getAllTaxis() {
         return allTaxis;
     }
+
 
     private static class InsertTaxiAsyncTask extends AsyncTask<Taxi, Void, Void>{
         private TaxiDao taxiDao;
