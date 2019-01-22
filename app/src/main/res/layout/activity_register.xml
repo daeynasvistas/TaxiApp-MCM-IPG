@@ -11,7 +11,7 @@
     android:paddingRight="24dp"
 
     android:background="@drawable/gradient_background"
-    tools:context=".ui.authentication.LoginActivity">
+    tools:context=".ui.authentication.RegisterActivity">
 
 
     <ImageView
@@ -21,7 +21,7 @@
         android:fillColor="#ffffff"
         android:src="@drawable/logo" />
 
-    <!-- Login progress -->
+    <!-- Register progress -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
     <ProgressBar
-        android:id="@+id/login_progress"
+        android:id="@+id/register_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,15 +39,33 @@
         android:visibility="gone" />
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/register_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/email_register_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_verified_user"
+                    android:drawablePadding = "10dp"
+                    android:hint="@string/prompt_name"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -86,31 +104,47 @@
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <EditText
+                    android:id="@+id/password2"
+                    android:drawableStart="@drawable/ic_password"
+                    android:drawablePadding = "10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password2"
+                    android:imeActionId="6"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
 
-
+            </android.support.design.widget.TextInputLayout>
 
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/User_sign_up_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
                 android:background="@color/colorPrimary"
-                android:text="Login"
-                android:layout_marginTop="15dp"
+                android:text="Registar"
                 android:textColor="#000" />
-                />
+            />
 
             <TextView
-                android:id="@+id/textViewRegister"
+                android:id="@+id/textViewLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="7dp"
-                android:text="Ainda não tem uma conta?\nClique para Registar"
+                android:text="Já tem conta?\nClique para Entrar"
                 android:textAlignment="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/grey_very_hard" />

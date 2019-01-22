@@ -22,7 +22,8 @@ public class MainEmptyActivity extends AppCompatActivity {
 
         // go straight to main if a token is stored
         //https://android.jlelse.eu/login-and-main-activity-flow-a52b930f8351
-        if (PrefManager.getInstance(this).haveToken() != null) {
+        // DEBUG if (PrefManager.getInstance(this).haveToken() != null) {
+        if (null != null) {
             // debug ------
             //String token = PrefManager.getInstance(this).haveToken();
             activityIntent = new Intent(this, MainActivity.class);

@@ -11,13 +11,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Client {
-    //private static final String AUTH = "Basic ";
+    private static final String AUTH = "token";
     private static final String BASE_URL = "https://workshop-ipg.azurewebsites.net/"; // <--- ALTERAR vers.0.5
     private static Client mInstance;
     private Retrofit retrofit;
 
 
-    private Client(final String token) {
+    private Client() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(
                         new Interceptor() {
@@ -26,7 +26,7 @@ public class Client {
                                 Request original = chain.request();
 
                                 Request.Builder requestBuilder = original.newBuilder()
-                                        .addHeader("Authorization", token)
+                                        .addHeader("Authorization", AUTH)
                                         .method(original.method(), original.body());
 
                                 Request request = requestBuilder.build();
@@ -42,9 +42,9 @@ public class Client {
                 .build();
     }
 
-    public static synchronized Client getInstance(String token) {
+    public static synchronized Client getInstance() {
         if (mInstance == null) {
-            mInstance = new Client(token);
+            mInstance = new Client();
         }
         return mInstance;
     }
