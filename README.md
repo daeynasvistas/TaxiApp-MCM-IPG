@@ -16,6 +16,7 @@
 
 ## Vers. O.3
 ![screenshot_20190122-182625](https://user-images.githubusercontent.com/2634610/51556911-61a84200-1e73-11e9-81de-c647ba1a3d56.png)
+![screenshot_20190122-203151](https://user-images.githubusercontent.com/2634610/51563826-5c53f300-1e85-11e9-87c4-3179c249dd5e.png)
 ![screenshot_20190122-183058](https://user-images.githubusercontent.com/2634610/51557126-eeeb9680-1e73-11e9-9411-be3923b03b00.png)
 
 ## Vers. O.2
