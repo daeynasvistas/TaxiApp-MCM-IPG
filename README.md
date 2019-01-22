@@ -6,7 +6,7 @@
 - [x] Room Database
 - [x] Repository
 - [x] LoginView
-- [ ] Better LoginView
+- [X] Better LoginView
 - [ ] SettingView
 - [x] MainView
 - [x] ApiService
