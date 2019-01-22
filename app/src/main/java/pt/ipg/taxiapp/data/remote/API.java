@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 public interface API {
 
     @FormUrlEncoded
-    @POST("API/Users/login")
+    @POST("API/Users/login?include=user")
     Call<LoginResponse> userLogin(
             @Field("email") String email,
             @Field("password") String password

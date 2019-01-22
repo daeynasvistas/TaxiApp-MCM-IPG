@@ -35,6 +35,9 @@ import java.util.Random;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.persistance.local.PrefManager;
+import pt.ipg.taxiapp.ui.authentication.LoginActivity;
 
 public class Tools {
 
@@ -254,10 +257,10 @@ public class Tools {
         return randomPoints.get(indexOfNearestPointToCentre);
     }
 
+    public static String getUsername(Context ctx){
 
-    public static String getToken() {
-
-        return null;
+        return PrefManager.getInstance(ctx).getUser().getUsername();
     }
+
 }
 

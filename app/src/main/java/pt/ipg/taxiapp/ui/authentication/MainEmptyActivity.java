@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 
+import pt.ipg.taxiapp.data.persistance.local.PrefManager;
 import pt.ipg.taxiapp.ui.main.MainActivity;
 import pt.ipg.taxiapp.utils.Tools;
 
@@ -21,7 +22,9 @@ public class MainEmptyActivity extends AppCompatActivity {
 
         // go straight to main if a token is stored
         //https://android.jlelse.eu/login-and-main-activity-flow-a52b930f8351
-        if (Tools.getToken() != null) {
+        if (PrefManager.getInstance(this).haveToken() != null) {
+            // debug ------
+            //String token = PrefManager.getInstance(this).haveToken();
             activityIntent = new Intent(this, MainActivity.class);
         } else {
             activityIntent = new Intent(this, LoginActivity.class);

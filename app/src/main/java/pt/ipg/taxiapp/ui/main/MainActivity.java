@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -129,6 +130,12 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        // -- Encontrar melhor método !! <---- 0.4
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.myUsername);
+        navUsername.setText(Tools.getUsername(this));
+        // ---------- colocar nome utilizador (talvez base de dados)
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {

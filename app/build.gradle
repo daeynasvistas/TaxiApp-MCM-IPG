@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "pt.ipg.taxiapp"
@@ -46,9 +49,9 @@ dependencies {
     implementation 'com.balysv:material-ripple:1.0.2'
 
     // google maps library
-    implementation 'com.google.android.gms:play-services-maps:15.0.1'
-    implementation 'com.google.android.gms:play-services-places:15.0.1'
-    implementation 'com.google.API.client:google-API-client-util:1.2.3-alpha'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-places:16.0.0'
+    implementation 'com.google.api-client:google-api-client:1.25.0'
     implementation 'com.google.maps:google-maps-services:0.1.15'
     implementation 'com.google.maps.android:android-maps-utils:0.4.3'
 
