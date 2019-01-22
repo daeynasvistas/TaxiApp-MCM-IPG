@@ -1,13 +1,16 @@
 package pt.ipg.taxiapp.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 
 @Entity(tableName = "user_table")
 public class User {
 
     @PrimaryKey(autoGenerate = false)
+    @NonNull
     private String id; //MongoDB
 
     private String realm, username, email, emailVerified, token;
@@ -22,8 +25,16 @@ public class User {
         this.id = id;
      }
 
+    @Ignore // para room utilizar o anteriro(só pode utilizar um)
     public User(String token) {
         this.token = token;
+    }
+
+    @Ignore
+    public User(String id, String email, String username) {
+        this.username = username;
+        this.email = email;
+        this.id = id;
     }
 
     public void setId(String id) {
@@ -70,6 +81,10 @@ public class User {
 
     public String getToken() {
         return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
 

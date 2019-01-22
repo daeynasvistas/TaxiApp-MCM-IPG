@@ -1,4 +1,6 @@
-package pt.ipg.taxiapp.data.model;
+package pt.ipg.taxiapp.data.model.remote;
+
+import pt.ipg.taxiapp.data.model.User;
 
 public class LoginResponse {
 

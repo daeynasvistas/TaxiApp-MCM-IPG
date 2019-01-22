@@ -7,9 +7,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
-import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.User;
-import pt.ipg.taxiapp.data.repository.TaxiAppRepository;
 import pt.ipg.taxiapp.data.repository.UserAppRepository;
 
 

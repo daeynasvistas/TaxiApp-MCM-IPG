@@ -1,7 +1,7 @@
 package pt.ipg.taxiapp.data.remote;
 
 
-import pt.ipg.taxiapp.data.model.LoginResponse;
+import pt.ipg.taxiapp.data.model.remote.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

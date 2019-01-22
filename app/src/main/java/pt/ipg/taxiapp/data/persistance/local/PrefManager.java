@@ -3,7 +3,6 @@ package pt.ipg.taxiapp.data.persistance.local;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import pt.ipg.taxiapp.data.model.LoginResponse;
 import pt.ipg.taxiapp.data.model.User;
 
 public class PrefManager {
