@@ -10,7 +10,7 @@
 - [ ] SettingView
 - [x] MainView
 - [x] ApiService
-- [x] Register (bug username need to be unique)
+- [x] RegisterView (bug username need to be unique)
 - [x] Login Flow API (with token save)
 - [ ] GetTaxis from API
 
