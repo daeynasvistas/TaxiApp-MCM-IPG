@@ -1,13 +1,18 @@
 package pt.ipg.taxiapp.ui.main;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.location.Location;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,6 +22,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +31,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -50,11 +57,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.adapter.RideClassListAdapter;
+import pt.ipg.taxiapp.adapter.RideAdapter;
 import pt.ipg.taxiapp.data.Constant;
-import pt.ipg.taxiapp.data.model.RideClass;
+import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.utils.CurrentLocationListener;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class MainActivity extends AppCompatActivity {
@@ -65,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private GoogleMap mMap;
     private Polyline polyline;
+
+    private StringBuilder builder;
 
 
     @Override
@@ -82,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
         //Vers0.2
         initComponent();
 
-
+        //Vers0.5
+        initLocation();
 
         /*
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -97,6 +108,47 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void initLocation() {
+        builder = new StringBuilder();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 1000);
+        } else {
+            getLocationUpdates();
+        }
+    }
+
+    private void getLocationUpdates() {
+        CurrentLocationListener.getInstance(getApplicationContext()).observe(this, new Observer<Location>() {
+            @Override
+            public void onChanged(@Nullable Location location) {
+                if (location != null) {
+                    Log.d(MainActivity.class.getSimpleName(),
+                            "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
+                   //  Toast.makeText(MainActivity.this, "Location Changed", Toast.LENGTH_SHORT).show();
+
+                    builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
+                    builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
+
+                    Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1000) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                getLocationUpdates();
+            }
+        }
+    }
 
 
     private static void displayMarker(Activity act, GoogleMap googleMap, TaxiPosition c) {
@@ -282,6 +334,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
+
+
+
+
+
+
+    // ------------ MOVER para viewModel ------------------------ !!!!!!!!!!!!!!!11
+
+
+
     /// --- alterar o valor da ride
     private void showDialogRideClass() {
         final Dialog dialog = new Dialog(this);
@@ -300,11 +364,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         //adapter  .. talvez mudar para listview?
-        RideClassListAdapter mAdapter = new RideClassListAdapter(this, Constant.getRideClassData(this));
+        RideAdapter mAdapter = new RideAdapter(this, Constant.getRideData(this));
         recyclerView.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new RideClassListAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new RideAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, RideClass obj, int position) {
+            public void onItemClick(View view, Ride obj, int position) {
                 changeRideClass(obj);
                 dialog.dismiss();
             }
@@ -315,11 +379,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // MOVER TUDO PARA VIEWMODEL!!!! ver 0.5
-    private void changeRideClass(RideClass obj) {
+    private void changeRideClass(Ride obj) {
         Picasso.with(this).load(obj.image).into(((ImageView) findViewById(R.id.image)));
-        ((TextView) findViewById(R.id.class_name)).setText(obj.class_name);
+        ((TextView) findViewById(R.id.class_name)).setText(obj.name);
         ((TextView) findViewById(R.id.price)).setText(obj.price);
-        ((TextView) findViewById(R.id.pax)).setText(obj.pax);
+        ((TextView) findViewById(R.id.pax)).setText(obj.pess);
         ((TextView) findViewById(R.id.duration)).setText(obj.duration);
     }
 

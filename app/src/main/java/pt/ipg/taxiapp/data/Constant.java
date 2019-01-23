@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.data.model.RideClass;
+import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 
@@ -50,8 +50,8 @@ public class Constant {
 
 
 // alterar para vers 0.8 .. sync com API para atualizar os preços
-    public static List<RideClass> getRideClassData(Context ctx) {
-        List<RideClass> items = new ArrayList<>();
+    public static List<Ride> getRideData(Context ctx) {
+        List<Ride> items = new ArrayList<>();
         TypedArray images = ctx.getResources().obtainTypedArray(R.array.ride_image);
 
         String[] names = ctx.getResources().getStringArray(R.array.ride_name);
@@ -60,11 +60,11 @@ public class Constant {
         String[] durations = ctx.getResources().getStringArray(R.array.ride_duration);
 
         for (int i = 0; i < names.length; i++) {
-            RideClass item = new RideClass();
-            item.class_name = names[i];
+            Ride item = new Ride();
+            item.name = names[i];
             item.image = images.getResourceId(i, -1);
             item.price = prices[i];
-            item.pax = paxs[i] + " pess";
+            item.pess = paxs[i] + " pess";
             item.duration = durations[i] + " min";
             items.add(item);
         }

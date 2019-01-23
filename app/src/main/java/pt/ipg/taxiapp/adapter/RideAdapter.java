@@ -15,16 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.data.model.RideClass;
+import pt.ipg.taxiapp.data.model.Ride;
 
-public class RideClassListAdapter extends RecyclerView.Adapter<RideClassListAdapter.ViewHolder> {
+public class RideAdapter extends RecyclerView.Adapter<RideAdapter.ViewHolder> {
 
     private Context ctx;
-    private List<RideClass> items = new ArrayList<>();
+    private List<Ride> items = new ArrayList<>();
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(View view, RideClass obj, int position);
+        void onItemClick(View view, Ride obj, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
@@ -51,13 +51,13 @@ public class RideClassListAdapter extends RecyclerView.Adapter<RideClassListAdap
 
     }
 
-    public RideClassListAdapter(Context ctx, List<RideClass> items) {
+    public RideAdapter(Context ctx, List<Ride> items) {
         this.ctx = ctx;
         this.items = items;
     }
 
     @Override
-    public RideClassListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RideAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_ride_class, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -65,11 +65,11 @@ public class RideClassListAdapter extends RecyclerView.Adapter<RideClassListAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        final RideClass r = items.get(position);
+        final Ride r = items.get(position);
         Picasso.with(ctx).load(r.image).into(holder.image);
-        holder.class_name.setText(r.class_name);
+        holder.class_name.setText(r.name);
         holder.price.setText(r.price);
-        holder.pax.setText(r.pax);
+        holder.pax.setText(r.pess);
         holder.duration.setText(r.duration);
 
         holder.lyt_parent.setOnClickListener(new View.OnClickListener() {

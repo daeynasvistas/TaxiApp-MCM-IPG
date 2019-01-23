@@ -64,5 +64,7 @@ dependencies {
     // para as imagens
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+   // para a localização ...
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
 
 }
