@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
             }
         });
 
@@ -198,8 +199,7 @@ public class LoginActivity extends AppCompatActivity  {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
+
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -246,18 +246,17 @@ public class LoginActivity extends AppCompatActivity  {
                     LoginResponse loginResponse = response.body();
                     mAuthTask = null;
                     if (response.code() ==200) {
+                        // guardar token nas preferências -- melhor que na BD
                          PrefManager.getInstance(LoginActivity.this)
                                  .saveUser(loginResponse.getUser(), loginResponse.getId());// (User, token)
-
-                        // debug -----
-                        //String token = loginResponse.getId();
-                        //User user =loginResponse.getUser();
                         // --------------------------
+                        showProgress(false);
                         Intent intent = new Intent(LoginActivity.this , MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
-                        finish();
-                        showProgress(false);
+
+                        finish();   // não permitir fazer back para login
+
 
                     } else {
                         showProgress(false);

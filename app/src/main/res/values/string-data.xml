@@ -2,6 +2,7 @@
 <resources>
 
     <!--dummy data ALTERAR para base dados-->
+    <!-- OK  REMOVER a partir ver0.3 -->
     <string-array name="car_location">
         <item>40.777198#-7.356920</item>
         <item>40.757658#-7.35710</item>
@@ -16,6 +17,33 @@
         <item>40.727598#-7.357360</item>
     </string-array>
 
+    <!--ride class dummy data-->
+    <!--implementar sync com API em vers 0.4-->
+    <integer-array name="ride_image">
+        <item>@drawable/ride_economy</item>
+        <item>@drawable/ride_large</item>
+        <item>@drawable/ride_premium</item>
+    </integer-array>
+    <string-array name="ride_name">
+        <item>Económico</item>
+        <item>Van</item>
+        <item>Limousine</item>
+    </string-array>
+    <string-array name="ride_price">
+        <item>€5.25</item>
+        <item>€10.50</item>
+        <item>€18.99</item>
+    </string-array>
+    <string-array name="ride_pax">
+        <item>1&#8211;4</item>
+        <item>1&#8211;6</item>
+        <item>1&#8211;3</item>
+    </string-array>
+    <string-array name="ride_duration">
+        <item>12</item>
+        <item>14</item>
+        <item>10</item>
+    </string-array>
 
 
 </resources>

@@ -1,13 +1,15 @@
 package pt.ipg.taxiapp.data.model.remote;
 
+import java.util.List;
 
+import pt.ipg.taxiapp.data.model.User;
 
-public class DefaultResponse {
+public class RegisterResponse {
     private String username;
     private String email;
     private String id;
 
-    public DefaultResponse(String username, String email, String id) {
+    public RegisterResponse(String username, String email, String id) {
         this.username = username;
         this.email = email;
         this.id = id;

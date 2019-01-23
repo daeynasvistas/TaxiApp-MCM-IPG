@@ -1,6 +1,7 @@
 package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -13,10 +14,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,12 +44,15 @@ import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
+import pt.ipg.taxiapp.adapter.RideClassListAdapter;
 import pt.ipg.taxiapp.data.Constant;
+import pt.ipg.taxiapp.data.model.RideClass;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.utils.Tools;
@@ -255,16 +263,64 @@ public class MainActivity extends AppCompatActivity {
 
     private void initComponent() {
 
+        ((View) findViewById(R.id.lyt_ride)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogRideClass();
+            }
+        });
+
         ((View) findViewById(R.id.lyt_request_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
                 com.google.android.gms.maps.model.LatLng point = new com.google.android.gms.maps.model.LatLng(40.777570, -7.349922);
                 com.google.android.gms.maps.model.LatLng randPin = Tools.getRandomLocation(point,2500);
-
                 taxiViewModel.insert(new Taxi("OK","Daniel@ept.pt","foto(alterar)",0,randPin.latitude,randPin.longitude));
+
             }
         });
+    }
+
+    /// --- alterar o valor da ride
+    private void showDialogRideClass() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
+        dialog.setContentView(R.layout.dialog_ride_class);
+        dialog.setCancelable(true);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.recyclerView);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+
+        //adapter  .. talvez mudar para listview?
+        RideClassListAdapter mAdapter = new RideClassListAdapter(this, Constant.getRideClassData(this));
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new RideClassListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RideClass obj, int position) {
+                changeRideClass(obj);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
+    }
+
+    // MOVER TUDO PARA VIEWMODEL!!!! ver 0.5
+    private void changeRideClass(RideClass obj) {
+        Picasso.with(this).load(obj.image).into(((ImageView) findViewById(R.id.image)));
+        ((TextView) findViewById(R.id.class_name)).setText(obj.class_name);
+        ((TextView) findViewById(R.id.price)).setText(obj.price);
+        ((TextView) findViewById(R.id.pax)).setText(obj.pax);
+        ((TextView) findViewById(R.id.duration)).setText(obj.duration);
     }
 
 
