@@ -14,6 +14,7 @@
 - [x] Login Flow API (with token save)
 - [ ] GetTaxis from API
 - [ ] Sync all values with API
+- [x] Location working
 
 ## Vers. O.4
 ![screenshot_20190123-212850](https://user-images.githubusercontent.com/2634610/51638978-b91fde00-1f57-11e9-816e-ba0d54953a2b.png)
