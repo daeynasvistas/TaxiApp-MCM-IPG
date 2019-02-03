@@ -63,6 +63,7 @@ import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.utils.CurrentLocationListener;
+import pt.ipg.taxiapp.utils.MapHelper;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,16 +72,18 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
     private NavigationView navigationView;
-    private GoogleMap mMap;
+    public GoogleMap mMap;
     private Polyline polyline;
 
     private StringBuilder builder;
-
+    private Location myLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Vers0.5
+        initLocation();
 
         // vers0.1
         initToolbar();
@@ -92,8 +95,7 @@ public class MainActivity extends AppCompatActivity {
         //Vers0.2
         initComponent();
 
-        //Vers0.5
-        initLocation();
+
 
         /*
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -127,15 +129,29 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Location location) {
                 if (location != null) {
-                    Log.d(MainActivity.class.getSimpleName(),
-                            "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
+                   // Log.d(MainActivity.class.getSimpleName(),
+                   //         "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
                    //  Toast.makeText(MainActivity.this, "Location Changed", Toast.LENGTH_SHORT).show();
 
                     builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
                     builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
+                    if (myLocation==null) {
+                        // primeira posição
+                        CameraUpdate center = CameraUpdateFactory.newLatLngZoom(
+                                new com.google.android.gms.maps.model.LatLng(location.getLatitude(), location.getLongitude()), 15);
 
-                    Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
+                        mMap.moveCamera(center);
+                        // RECEBER da Minha Posição !!!! <------------------------ ver 0.3 ------------ ToDO
+                    }
+                    // Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
+                    myLocation = location; // posição mobile actualizada
+
+
+                    // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
+
+
                 }
+
             }
         });
     }
@@ -150,23 +166,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    private static void displayMarker(Activity act, GoogleMap googleMap, TaxiPosition c) {
-        // make current location marker
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(c.latLng);
-        markerOptions.anchor(0.5f, 0.5f);
-
-        LayoutInflater inflater = (LayoutInflater) act.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View marker_view = inflater.inflate(R.layout.maps_marker, null);
-        ImageView marker = (ImageView) marker_view.findViewById(R.id.marker);
-        marker.setImageResource(R.drawable.ic_car_pin);
-        marker.setLayoutParams(new LinearLayout.LayoutParams(Tools.dpToPx(act, 40), Tools.dpToPx(act, 40)));
-        marker.setRotation(c.rotation);
-
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(Tools.createBitmapFromView(act, marker_view)));
-        googleMap.addMarker(markerOptions);
-    }
 
     private void initToolbar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -221,12 +220,13 @@ public class MainActivity extends AppCompatActivity {
     // ----------------------------- Ver 0.2 -------------REMOVER para VIEWMODEL--------------------------------------------
     public void configureMap(GoogleMap googleMap) {
         mMap = Tools.configBasicGoogleMap(googleMap);
-        CameraUpdate center = CameraUpdateFactory.newLatLngZoom(
-                new com.google.android.gms.maps.model.LatLng(40.777198, -7.350320), 15);
+
+       /* CameraUpdate center = CameraUpdateFactory.newLatLngZoom(
+                new com.google.android.gms.maps.model.LatLng(myLocation.getLatitude(),myLocation.getLongitude()), 15);
 
         mMap.moveCamera(center);
         // RECEBER da Minha Posição !!!! <------------------------ ver 0.3 ------------ ToDO
-
+        */
         taxiViewModel = ViewModelProviders.of(this).get(TaxiViewModel.class);
         taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
             @Override
@@ -241,12 +241,12 @@ public class MainActivity extends AppCompatActivity {
                 LatLng origin = new LatLng(40.777570, -7.349922);
                 LatLng destination = new LatLng(40.827570, -7.349922);
 
-                displayMarker(origin, true);
-                displayMarker(destination, false);
+                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, true));
+                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, true));
                 drawPolyLine(origin, destination);
 
                 for (TaxiPosition c : items) {
-                     displayMarker(MainActivity.this, mMap, c);
+                    MapHelper.displayMarker(MainActivity.this, mMap, c);
                  }
 
             }
@@ -284,22 +284,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void displayMarker(LatLng location, boolean isOrigin) {
-        // make current location marker
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(new com.google.android.gms.maps.model.LatLng(location.lat, location.lng));
 
-        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View marker_view = inflater.inflate(R.layout.maps_marker, null);
-        ImageView marker = (ImageView) marker_view.findViewById(R.id.marker);
-        marker.setBackgroundResource(isOrigin ? R.drawable.marker_origin : R.drawable.marker_destination);
-        if (isOrigin) {
-            marker.setImageResource(R.drawable.ic_origin);
-        }
 
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(Tools.createBitmapFromView(this, marker_view)));
-        mMap.addMarker(markerOptions);
-    }
     //--------------------------------------------------------------------------------------------------
     private void initMapFragment() {
         Tools.checkInternetConnection(this);
