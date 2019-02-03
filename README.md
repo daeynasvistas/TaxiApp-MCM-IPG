@@ -13,7 +13,12 @@
 - [x] RegisterView (bug username need to be unique)
 - [x] Login Flow API (with token save)
 - [ ] GetTaxis from API
+- [ ] Sync all values with API
+- [x] Location working
 
+## Vers. O.4
+![screenshot_20190123-212850](https://user-images.githubusercontent.com/2634610/51638978-b91fde00-1f57-11e9-816e-ba0d54953a2b.png)
+![screenshot_20190123-212903](https://user-images.githubusercontent.com/2634610/51639021-d05ecb80-1f57-11e9-87cd-d01667d4bbae.png)
 
 ## Vers. O.3
 ![screenshot_20190122-182625](https://user-images.githubusercontent.com/2634610/51556911-61a84200-1e73-11e9-81de-c647ba1a3d56.png)
@@ -34,5 +39,3 @@
 
 ## Test MVVM with Room and WebserviceAPI
 ![arch](https://taxi-images.githubusercontent.com/2634610/51175082-3771e580-18b1-11e9-89a0-a46adc9ca85f.png)
-
-
