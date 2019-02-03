@@ -54,7 +54,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     implementation 'com.google.android.gms:play-services-places:16.0.0'
     implementation 'com.google.api-client:google-api-client:1.25.0'
-    implementation 'com.google.maps:google-maps-services:0.1.15'
+    implementation 'com.google.maps:google-maps-services:0.9.1'
     implementation 'com.google.maps.android:android-maps-utils:0.4.3'
 
     // retrofit para o JSON!!!

@@ -3,7 +3,14 @@ package pt.ipg.taxiapp.ui.main;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.model.LatLng;
 
 import java.util.List;
 

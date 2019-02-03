@@ -27,24 +27,24 @@
     <string-array name="ride_name">
         <item>Económico</item>
         <item>Van</item>
-        <item>Limousine</item>
+
     </string-array>
     <string-array name="ride_price">
         <item>€5.25</item>
         <item>€10.50</item>
-        <item>€18.99</item>
+
     </string-array>
     <string-array name="ride_pax">
         <item>1&#8211;4</item>
         <item>1&#8211;6</item>
-        <item>1&#8211;3</item>
+
     </string-array>
 
 
     <string-array name="ride_duration">
         <item>12</item>
         <item>14</item>
-        <item>10</item>
+
     </string-array>
 
 

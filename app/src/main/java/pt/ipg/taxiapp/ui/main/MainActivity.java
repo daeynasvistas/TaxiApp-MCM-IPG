@@ -78,11 +78,12 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
     private NavigationView navigationView;
-    public GoogleMap mMap;
+    private GoogleMap mMap;
     private Polyline polyline;
 
     private StringBuilder builder;
     private Location myLocation;
+    private Location myFistLocation;
 
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
@@ -108,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
         //Vers0.2
         initComponent();
 
-
-
         /*
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -118,10 +117,8 @@ public class MainActivity extends AppCompatActivity {
         final UserA adapter = new TaxiAdapter();
        // recyclerView.setAdapter(adapter);
 */
-
-
-
     }
+
 
     private void initLocation() {
         builder = new StringBuilder();
@@ -142,26 +139,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable Location location) {
                 if (location != null) {
+
+                   // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
                    // Log.d(MainActivity.class.getSimpleName(),
                    //         "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
                    //  Toast.makeText(MainActivity.this, "Location Changed", Toast.LENGTH_SHORT).show();
+                   // builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
+                   // builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
 
-                    builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
-                    builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
-                    if (myLocation==null) {
-                        // primeira posição
+
+                    // ONCHANGE a minha POS
+                    if ((myLocation==null)&&(mMap!=null)){ // First time
                         CameraUpdate center = CameraUpdateFactory.newLatLngZoom(
-                                new com.google.android.gms.maps.model.LatLng(location.getLatitude(), location.getLongitude()), 15);
-
+                                new com.google.android.gms.maps.model.LatLng(location.getLatitude(),location.getLongitude()), 15);
                         mMap.moveCamera(center);
-                        // RECEBER da Minha Posição !!!! <------------------------ ver 0.3 ------------ ToDO
                     }
-                    // Toast.makeText(MainActivity.this, builder.toString(), Toast.LENGTH_LONG).show();
                     myLocation = location; // posição mobile actualizada
-
-
-                    // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
-
 
                 }
 
@@ -230,38 +223,39 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
+
+
     // ----------------------------- Ver 0.2 -------------REMOVER para VIEWMODEL--------------------------------------------
     public void configureMap(GoogleMap googleMap) {
         mMap = Tools.configBasicGoogleMap(googleMap);
 
-       /* CameraUpdate center = CameraUpdateFactory.newLatLngZoom(
-                new com.google.android.gms.maps.model.LatLng(myLocation.getLatitude(),myLocation.getLongitude()), 15);
 
-        mMap.moveCamera(center);
-        // RECEBER da Minha Posição !!!! <------------------------ ver 0.3 ------------ ToDO
-        */
-        taxiViewModel = ViewModelProviders.of(this).get(TaxiViewModel.class);
-        taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
+       // ONCHANGE taxis num raio 30 KM
+        taxiViewModel = ViewModelProviders.of(MainActivity.this).get(TaxiViewModel.class);
+        taxiViewModel.getAllTaxis().observe(MainActivity.this, new Observer<List<Taxi>>() {
             @Override
             public void onChanged(@Nullable List<Taxi> taxis) {
                 //    Tools.displayCarAroundMarkers(MainActivity.this, mMap);
                 // update o mapa com novos Taxis .. Vers.0.4
-                int size = taxiViewModel.getAllTaxis().getValue().size();
-                Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
+                //int size = taxiViewModel.getAllTaxis().getValue().size();
+                //Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
 
-                List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);
+                //List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);
                 mMap.clear();
+
+
                 LatLng origin = new LatLng(40.777570, -7.349922);
                 LatLng destination = new LatLng(40.827570, -7.349922);
-
                 mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, true));
                 mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, true));
-                drawPolyLine(origin, destination);
+               // drawPolyLine(origin, destination);
 
-               // for (TaxiPosition c : items) {
-               //     MapHelper.displayMarker(MainActivity.this, mMap, c);
-               //  }
-                Tools.displayCarAroundMarkers(MainActivity.this, mMap);
+                LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, myLoc, true));
+                // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
+               Tools.displayCarAroundMarkers(MainActivity.this, mMap);
             }
         });
 
@@ -269,10 +263,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
-        GeoApiContext context = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
-        context.setConnectTimeout(10, TimeUnit.SECONDS);
+        GeoApiContext context = new GeoApiContext.Builder().apiKey(getString(R.string.google_maps_key)).build();
+       // context.setConnectTimeout(10, TimeUnit.SECONDS);
         DirectionsApiRequest d = DirectionsApi.newRequest(context);
-        d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
+      /*  d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
         d.setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
             public void onResult(DirectionsResult result) {
@@ -294,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Throwable e) {
 
             }
-        });
+        });*/
     }
 
 
