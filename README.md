@@ -15,6 +15,13 @@
 - [ ] GetTaxis from API
 - [ ] Sync all values with API
 - [x] Location working
+- [x] MyPosition onStart 
+- [x] GeoLocation Places
+
+## Vers. O.5
+![screenshot_20190203-144842](https://user-images.githubusercontent.com/2634610/52180675-34e41b00-27e1-11e9-80c9-5ea2271f7933.png)
+![screenshot_20190203-182334](https://user-images.githubusercontent.com/2634610/52180676-34e41b00-27e1-11e9-99f7-4f1b16ef5c1b.png)
+![screenshot_20190203-144816](https://user-images.githubusercontent.com/2634610/52180677-34e41b00-27e1-11e9-9b3e-1b636d280e0c.png)
 
 ## Vers. O.4
 ![screenshot_20190123-212850](https://user-images.githubusercontent.com/2634610/51638978-b91fde00-1f57-11e9-816e-ba0d54953a2b.png)
