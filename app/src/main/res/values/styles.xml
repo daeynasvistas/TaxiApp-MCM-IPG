@@ -48,5 +48,23 @@
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textColorHint">@color/colorWhite</item>
-    </style>TextAppearance
+    </style>
+
+
+    <!--Melhorar o style da busca localização v. 0.6-->
+    <style name="ProgressBar.Primary" parent="@style/AppTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.FullScreenDialog">
+        <item name="android:windowAnimationStyle">@style/Animation.WindowSlideUpDown</item>
+    </style>
+
+    <!--Animação fragmento COLOCAR stackover link REVER onde vi código !! v. 0.6-->
+    <style name="Animation.WindowSlideUpDown" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_fragment_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_fragment_out</item>
+    </style>
+
 </resources>

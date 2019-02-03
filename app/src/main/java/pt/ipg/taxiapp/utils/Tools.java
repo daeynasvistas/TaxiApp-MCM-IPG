@@ -262,5 +262,15 @@ public class Tools {
         return PrefManager.getInstance(ctx).getUser().getUsername();
     }
 
+
+
+    public static void hideKeyboardFragment(DialogFragment dialog) {
+        try {
+            dialog.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        } catch (Exception e) {
+        }
+    }
+
+
 }
 

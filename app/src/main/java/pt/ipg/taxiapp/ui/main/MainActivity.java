@@ -13,6 +13,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,9 +66,11 @@ import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.ui.fragment.FragmentDialogLocation;
 import pt.ipg.taxiapp.utils.CurrentLocationListener;
 import pt.ipg.taxiapp.utils.MapHelper;
 import pt.ipg.taxiapp.utils.Tools;
+
 
 public class MainActivity extends AppCompatActivity {
     private TaxiViewModel taxiViewModel;
@@ -77,6 +83,13 @@ public class MainActivity extends AppCompatActivity {
 
     private StringBuilder builder;
     private Location myLocation;
+
+    private FragmentTransaction transaction;
+    private FragmentManager fragmentManager;
+
+    private TextView tv_note, tv_promo, tv_payment;
+    private EditText et_pickup, et_destination;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,14 +258,14 @@ public class MainActivity extends AppCompatActivity {
                 mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, true));
                 drawPolyLine(origin, destination);
 
-                for (TaxiPosition c : items) {
-                    MapHelper.displayMarker(MainActivity.this, mMap, c);
-                 }
-
+               // for (TaxiPosition c : items) {
+               //     MapHelper.displayMarker(MainActivity.this, mMap, c);
+               //  }
+                Tools.displayCarAroundMarkers(MainActivity.this, mMap);
             }
         });
 
-       // Tools.displayCarAroundMarkers(this, mMap);
+
     }
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
@@ -301,12 +314,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void initComponent() {
 
+        tv_note = (TextView) findViewById(R.id.tv_note);
+        tv_promo = (TextView) findViewById(R.id.tv_promo);
+        tv_payment = (TextView) findViewById(R.id.tv_payment);
+
+        et_pickup = (EditText) findViewById(R.id.et_pickup);
+        et_destination = (EditText) findViewById(R.id.et_destination);
+
         ((View) findViewById(R.id.lyt_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialogRideClass();
             }
         });
+
+        ((View) findViewById(R.id.lyt_pickup)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLocation(true);
+            }
+        });
+
+        ((View) findViewById(R.id.lyt_destination)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogLocation(false);
+            }
+        });
+
+
 
         ((View) findViewById(R.id.lyt_request_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -328,7 +364,42 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    // ------------ MOVER para viewModel ------------------------ !!!!!!!!!!!!!!!11
+    // ------------ MOVER para viewModel ------- DEBUG ----------------- !!!!!!!!!!!!!!!11
+
+    private void showDialogLocation(boolean isPickUp) {
+        fragmentManager = getSupportFragmentManager();
+        transaction = fragmentManager.beginTransaction();
+        Fragment previous = getSupportFragmentManager().findFragmentByTag(FragmentDialogLocation.class.getName());
+        // remover
+        if (previous != null) transaction.remove(previous);
+        transaction.addToBackStack(null);
+
+        final FragmentDialogLocation fragment = new FragmentDialogLocation();
+        fragment.setHint(isPickUp ? "Insira origem do trajeto" : "Destino do trajeto");
+        fragment.setRequestCode(isPickUp ? 5000 : 6000); // escolher Id como prof carreto indicou
+
+        fragment.setOnCallbackResult(new FragmentDialogLocation.CallbackResult() {
+            @Override
+            public void sendResult(int requestCode, String loc) {
+                if (requestCode == 5000) {
+                    et_pickup.setText(loc);
+                    // fazer cenas aqui -- toDO
+                    // colocar origem no mapa
+                } else if (requestCode == 6000) {
+                    et_destination.setText(loc);
+                    // fazer cenas aqui -- toDO
+                    // colocar destino no mapa
+                }
+            }
+        });
+
+        fragment.show(transaction, FragmentDialogLocation.class.getName());
+    }
+    // ------------ MOVER para viewModel -------------FIM ----------- !!!!!!!!!!!!!!!11
+
+
+
+
 
 
 
