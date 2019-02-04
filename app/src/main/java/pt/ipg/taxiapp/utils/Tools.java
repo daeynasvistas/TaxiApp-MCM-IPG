@@ -35,6 +35,9 @@ import java.util.Random;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.persistance.local.PrefManager;
+import pt.ipg.taxiapp.ui.authentication.LoginActivity;
 
 public class Tools {
 
@@ -254,6 +257,19 @@ public class Tools {
         return randomPoints.get(indexOfNearestPointToCentre);
     }
 
+    public static String getUsername(Context ctx){
+
+        return PrefManager.getInstance(ctx).getUser().getUsername();
+    }
+
+
+
+    public static void hideKeyboardFragment(DialogFragment dialog) {
+        try {
+            dialog.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        } catch (Exception e) {
+        }
+    }
 
 
 }

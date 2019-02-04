@@ -5,10 +5,35 @@
 ### ToDo
 - [x] Room Database
 - [x] Repository
-- [ ] LoginView
+- [x] LoginView
+- [X] Better LoginView
 - [ ] SettingView
 - [x] MainView
-- [ ] ApiService
+- [x] ApiService
+- [x] RegisterView (bug username need to be unique)
+- [x] Login Flow API (with token save)
+- [ ] GetTaxis from API
+- [ ] Sync all values with API
+- [x] Location working
+- [x] MyPosition onStart 
+- [x] GeoLocation Places
+
+
+## Vers. O.5
+![screenshot_20190203-182334](https://user-images.githubusercontent.com/2634610/52180676-34e41b00-27e1-11e9-99f7-4f1b16ef5c1b.png)
+![screenshot_20190203-144816](https://user-images.githubusercontent.com/2634610/52180677-34e41b00-27e1-11e9-9b3e-1b636d280e0c.png)
+
+## Vers. O.4
+![screenshot_20190123-212850](https://user-images.githubusercontent.com/2634610/51638978-b91fde00-1f57-11e9-816e-ba0d54953a2b.png)
+![screenshot_20190123-212903](https://user-images.githubusercontent.com/2634610/51639021-d05ecb80-1f57-11e9-87cd-d01667d4bbae.png)
+
+## Vers. O.3
+![screenshot_20190122-182625](https://user-images.githubusercontent.com/2634610/51556911-61a84200-1e73-11e9-81de-c647ba1a3d56.png)
+![screenshot_20190122-203151](https://user-images.githubusercontent.com/2634610/51563826-5c53f300-1e85-11e9-87c4-3179c249dd5e.png)
+![screenshot_20190122-183058](https://user-images.githubusercontent.com/2634610/51557126-eeeb9680-1e73-11e9-9411-be3923b03b00.png)
+
+## Vers. O.2
+![screenshot_20190121-160738](https://user-images.githubusercontent.com/2634610/51485771-d0fc3400-1d96-11e9-87d6-f75943d9c81c.png)
 
 ## Vers. O.2
 ![screenshot_20190121-160738](https://user-images.githubusercontent.com/2634610/51485771-d0fc3400-1d96-11e9-87d6-f75943d9c81c.png)
@@ -25,4 +50,3 @@
 
 ## Test MVVM with Room and WebserviceAPI
 ![arch](https://taxi-images.githubusercontent.com/2634610/51175082-3771e580-18b1-11e9-89a0-a46adc9ca85f.png)
-

@@ -8,14 +8,14 @@ import java.util.List;
 
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.persistance.dao.TaxiDao;
-import pt.ipg.taxiapp.data.persistance.local.TaxiAppDatabase;
+import pt.ipg.taxiapp.data.persistance.local.AppDatabase;
 
 public class TaxiAppRepository {
     private TaxiDao taxiDao;
     private LiveData<List<Taxi>> allTaxis;
 
     public TaxiAppRepository(Application application){
-        TaxiAppDatabase database = TaxiAppDatabase.getInstance(application);
+        AppDatabase database = AppDatabase.getInstance(application);
         taxiDao = database.taxiDao();
         allTaxis = taxiDao.getAllTaxis();
 
@@ -42,13 +42,13 @@ public class TaxiAppRepository {
     }
 
 
-
-
-    // ------------------------------------------------------------------------
     public LiveData<List<Taxi>> getAllTaxis() {
         return allTaxis;
     }
 
+
+
+// ------------------------------------------------------------------------
 
     private static class InsertTaxiAsyncTask extends AsyncTask<Taxi, Void, Void>{
         private TaxiDao taxiDao;

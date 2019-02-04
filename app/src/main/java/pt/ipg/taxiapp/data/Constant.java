@@ -1,6 +1,7 @@
 package pt.ipg.taxiapp.data;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import pt.ipg.taxiapp.R;
+import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 
@@ -44,5 +46,28 @@ public class Constant {
          }
 
         return pins;
+    }
+
+
+// alterar para vers 0.8 .. sync com API para atualizar os preços
+    public static List<Ride> getRideData(Context ctx) {
+        List<Ride> items = new ArrayList<>();
+        TypedArray images = ctx.getResources().obtainTypedArray(R.array.ride_image);
+
+        String[] names = ctx.getResources().getStringArray(R.array.ride_name);
+        String[] prices = ctx.getResources().getStringArray(R.array.ride_price);
+        String[] paxs = ctx.getResources().getStringArray(R.array.ride_pax);
+        String[] durations = ctx.getResources().getStringArray(R.array.ride_duration);
+
+        for (int i = 0; i < names.length; i++) {
+            Ride item = new Ride();
+            item.name = names[i];
+            item.image = images.getResourceId(i, -1);
+            item.price = prices[i];
+            item.pess = paxs[i] + " pess";
+            item.duration = durations[i] + " min";
+            items.add(item);
+        }
+        return items;
     }
 }

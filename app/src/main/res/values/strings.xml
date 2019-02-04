@@ -3,7 +3,7 @@
 
 
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyCBF8PklKPhum9Xqs2e41-rjPSg-bSRsTo
+        AIzaSyAUXw5gwdbMIJaYZgXNAeNGDeYrqHtqq9E
     </string>
 
 
@@ -18,4 +18,51 @@
     <string name="PAGAMENTO">PAGAMENTO</string>
     <string name="Cash">Dinheiro</string>
     <string name="PEDIR_TAXI">CHAMAR TAXI</string>
+
+
+    <!--authentication-->
+    <string name="create_account">Don\'t Have An Account? Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">LOGIN</string>
+    <string name="signin_loading">"Signing In...."</string>
+    <string name="signup_loading">"Signing Up...."</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="signUp">SIGN UP</string>
+    <string name="registration_success">Registration success</string>
+
+    <!--authentication problemas-->
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="doesnt_match">Passwords does not match</string>
+    <string name="empty_fields">There are empty fields</string>
+    <string name="register_error">Sign-In Problem</string>
+
+    <string name="user_name">User name</string>
+    <string name="text">Text</string>
+    <string name="btn_save">save</string>
+
+    <!--ainda mais problemas-->
+    <string name="some_error">Some error occurred</string>
+    <string name="text_error">Text should be at least 5 characters</string>
+    <string name="title_activity_login">Entrar</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">Este Email é inválido</string>
+    <string name="error_invalid_password">A password é demasiado curta</string>
+    <string name="error_incorrect_password">A Password está incorrecta</string>
+    <string name="error_field_required">Este campo é obrigatório</string>
+    <string name="permission_rationale">"Permissão para aceder aos contactos"
+    </string>
+    <string name="prompt_password2">Confirmar</string>
+    <string name="prompt_name">Nome</string>
+    <string name="error_invalid_username">O seu nome é demasiado curto</string>
+    <string name="error_equal_password">As Passwords não são iguais</string>
+    <string name="erro_email_atribuido">Esse Email já está registado</string>
+    <string name="erro_username_existe">Esste username já está registado</string>
+
+
 </resources>
