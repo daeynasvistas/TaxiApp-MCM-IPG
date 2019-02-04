@@ -24,10 +24,14 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.data.DataBufferUtils;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.AutocompletePredictionBuffer;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.maps.model.LatLng;
 
 
 import java.util.ArrayList;
@@ -35,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.LocationListAdapter;
+import pt.ipg.taxiapp.ui.main.MainActivity;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class FragmentDialogLocation extends DialogFragment {
@@ -108,7 +113,11 @@ public class FragmentDialogLocation extends DialogFragment {
         mAdapter.setOnItemClickListener(new LocationListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, AutocompletePrediction obj, int position) {
-                sendDataResult(obj.getPrimaryText(null).toString());
+                // enviar PlaceId no array para marcar ponto
+                String[] str = new String[3];
+                str[0] = obj.getPrimaryText(null).toString();
+                str[1] = obj.getPlaceId();
+                sendDataResult(str);
                 dismissDialog();
             }
         });
@@ -168,10 +177,16 @@ public class FragmentDialogLocation extends DialogFragment {
 
     }
 
+    //https://code.tutsplus.com/articles/google-play-services-using-the-places-api--cms-23715
     private ArrayList<AutocompletePrediction> requestPredictionToGoogle(String keyword) {
         if (mGoogleApiClient.isConnected()) {
+            //https://stackoverflow.com/questions/34018781/how-to-get-country-specific-results-in-google-places-api-for-autocompletepredict/39785267
+           // AutocompleteFilter typeFilter = new AutocompleteFilter.Builder().
+           //         setTypeFilter(Place.TYPE_COUNTRY).setCountry("PT").build();
+
             PendingResult<AutocompletePredictionBuffer> results;
             results = Places.GeoDataApi.getAutocompletePredictions(mGoogleApiClient, keyword.toString(), null, null);
+
             AutocompletePredictionBuffer autocompletePredictions = results.await(60, TimeUnit.SECONDS);
             final Status status = autocompletePredictions.getStatus();
             if (!status.isSuccess()) {
@@ -179,6 +194,7 @@ public class FragmentDialogLocation extends DialogFragment {
                 Toast.makeText(getActivity(), "Error : " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                 return null;
             }
+
             return DataBufferUtils.freezeAndClose(autocompletePredictions);
         }
         return null;
@@ -191,10 +207,10 @@ public class FragmentDialogLocation extends DialogFragment {
         }
     };
 
-    private void sendDataResult(String loc) {
+    private void sendDataResult(String[] loc) {
         if (callbackResult != null) {
             callbackResult.sendResult(request_code, loc);
-        }
+         }
     }
 
     private void dismissDialog() {
@@ -231,7 +247,7 @@ public class FragmentDialogLocation extends DialogFragment {
     }
 
     public interface CallbackResult {
-        void sendResult(int requestCode, String loc);
+        void sendResult(int requestCode, String[] loc);
     }
 
 }

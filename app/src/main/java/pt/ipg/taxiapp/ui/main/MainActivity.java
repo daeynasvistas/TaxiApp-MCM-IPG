@@ -1,13 +1,12 @@
 package pt.ipg.taxiapp.ui.main;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.location.Geocoder;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,32 +24,33 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.DirectionsApi;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
+import com.google.maps.PlacesApi;
 import com.google.maps.model.DirectionsResult;
 import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.LatLng;
@@ -65,7 +65,6 @@ import pt.ipg.taxiapp.adapter.RideAdapter;
 import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
-import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.ui.fragment.FragmentDialogLocation;
 import pt.ipg.taxiapp.utils.CurrentLocationListener;
 import pt.ipg.taxiapp.utils.MapHelper;
@@ -92,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et_pickup, et_destination;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Vers0.2
         initComponent();
+
 
         /*
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
@@ -246,14 +247,20 @@ public class MainActivity extends AppCompatActivity {
                 mMap.clear();
 
 
-                LatLng origin = new LatLng(40.777570, -7.349922);
-                LatLng destination = new LatLng(40.827570, -7.349922);
-                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, true));
-                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, true));
-               // drawPolyLine(origin, destination);
+               // LatLng origin = new LatLng(40.777570, -7.349922);
+               // LatLng destination = new LatLng(40.827570, -7.349922);
+               // mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, true));
+               // mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, false));
 
-                LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
-                mMap.addMarker(MapHelper.displayMarker(MainActivity.this, myLoc, true));
+                // REVER 0.7 Nãofunciona!!!!!!!! ------------------------------ ToDO
+                //drawPolyLine(origin, destination);
+
+                try {
+                    LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
+                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, myLoc, true));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
                Tools.displayCarAroundMarkers(MainActivity.this, mMap);
             }
@@ -262,11 +269,16 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void drawPolyLine(LatLng origin, LatLng destination) {
-        GeoApiContext context = new GeoApiContext.Builder().apiKey(getString(R.string.google_maps_key)).build();
-       // context.setConnectTimeout(10, TimeUnit.SECONDS);
-        DirectionsApiRequest d = DirectionsApi.newRequest(context);
-      /*  d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
+        GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+       // geoApiContext.setConnectTimeout(10, TimeUnit.SECONDS);
+      //  DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext).origin(origin).destination(destination)
+       //         .alternatives(true).region("pt").mode(TravelMode.DRIVING);
+
+       DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext);
+       d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
+
         d.setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
             public void onResult(DirectionsResult result) {
@@ -288,8 +300,37 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Throwable e) {
 
             }
-        });*/
+        });
+
     }
+
+
+    private void getLatLng (LatLng origin, LatLng destination, String pos) {
+
+
+
+       /* if (mGoogleApiClient.isConnected()) {
+            //https://stackoverflow.com/questions/34018781/how-to-get-country-specific-results-in-google-places-api-for-autocompletepredict/39785267
+            com.google.android.gms.common.api.PendingResult<PlaceBuffer> result;
+            result = Places.GeoDataApi.getPlaceById(mGoogleApiClient, "ChIJrTLr-GyuEmsRBfy61i59si0");
+            PlaceBuffer placeBuffer = result.await(60, TimeUnit.SECONDS);
+            final Status status = placeBuffer.getStatus();
+            if (!status.isSuccess()) {
+                placeBuffer.release();
+                Toast.makeText(ctx, "Error : " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+            }
+            // dados aqui ...
+            final Place mPlace = placeBuffer.get(0);
+            double qLal = mPlace.getLatLng().latitude;
+            double qLng = mPlace.getLatLng().longitude;
+            qLocation = new LatLng(qLal,qLng);
+
+            return qLocation;
+        }*/
+
+    }
+
+
 
 
 
@@ -308,12 +349,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void initComponent() {
 
+        //Passar para ViewModel vers 0. 6
         tv_note = (TextView) findViewById(R.id.tv_note);
         tv_promo = (TextView) findViewById(R.id.tv_promo);
         tv_payment = (TextView) findViewById(R.id.tv_payment);
 
         et_pickup = (EditText) findViewById(R.id.et_pickup);
         et_destination = (EditText) findViewById(R.id.et_destination);
+        //Passar para ViewModel vers 0. 6
+
+
 
         ((View) findViewById(R.id.lyt_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,7 +409,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         transaction = fragmentManager.beginTransaction();
         Fragment previous = getSupportFragmentManager().findFragmentByTag(FragmentDialogLocation.class.getName());
-        // remover
+
         if (previous != null) transaction.remove(previous);
         transaction.addToBackStack(null);
 
@@ -372,23 +417,41 @@ public class MainActivity extends AppCompatActivity {
         fragment.setHint(isPickUp ? "Insira origem do trajeto" : "Destino do trajeto");
         fragment.setRequestCode(isPickUp ? 5000 : 6000); // escolher Id como prof carreto indicou
 
+
+
         fragment.setOnCallbackResult(new FragmentDialogLocation.CallbackResult() {
             @Override
-            public void sendResult(int requestCode, String loc) {
+            public void sendResult(int requestCode, String[] loc) {
+                LatLng destination = new LatLng(40.827570, -7.349922);
+                LatLng origin = new LatLng(40.777570, -7.349922);
+
                 if (requestCode == 5000) {
-                    et_pickup.setText(loc);
+                    et_pickup.setText(loc[0]);
                     // fazer cenas aqui -- toDO
                     // colocar origem no mapa
+                   // https://stackoverflow.com/questions/25928948/get-lat-lang-from-a-place-id-returned-by-autocomplete-place-api
+                    //LatLng origin = loc.getLatLng(); //que vem no objecto .. acho que é melhor método
+
+
+                    //
+                    getLatLng(origin,destination,"");
+                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, false));
+
+
+
                 } else if (requestCode == 6000) {
-                    et_destination.setText(loc);
                     // fazer cenas aqui -- toDO
                     // colocar destino no mapa
+
+                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, false));
                 }
             }
         });
 
         fragment.show(transaction, FragmentDialogLocation.class.getName());
     }
+
+
     // ------------ MOVER para viewModel -------------FIM ----------- !!!!!!!!!!!!!!!11
 
 
