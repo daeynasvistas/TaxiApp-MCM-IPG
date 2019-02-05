@@ -68,38 +68,6 @@ public class MapHelper {
 
 
 
-    // -------------------------  REMOVER ------------------- REMOVER .....................
-    private static GoogleApiClient mGoogleApiClient;
-    public  static LatLng getLatLng (Context ctx) {
-
-        mGoogleApiClient = new GoogleApiClient.Builder(ctx)
-               // .enableAutoManage(, 1, null)
-                .addApi(Places.GEO_DATA_API)
-                .build();
-        mGoogleApiClient.connect();
-
-        LatLng qLocation = new LatLng(0,0);
-        if (mGoogleApiClient.isConnected()) {
-            //https://stackoverflow.com/questions/34018781/how-to-get-country-specific-results-in-google-places-api-for-autocompletepredict/39785267
-            com.google.android.gms.common.api.PendingResult<PlaceBuffer> result;
-            result = Places.GeoDataApi.getPlaceById(mGoogleApiClient, "ChIJrTLr-GyuEmsRBfy61i59si0");
-            PlaceBuffer placeBuffer = result.await(60, TimeUnit.SECONDS);
-            final Status status = placeBuffer.getStatus();
-            if (!status.isSuccess()) {
-                placeBuffer.release();
-                Toast.makeText(ctx, "Error : " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-            }
-            // dados aqui ...
-            final Place mPlace = placeBuffer.get(0);
-            double qLal = mPlace.getLatLng().latitude;
-            double qLng = mPlace.getLatLng().longitude;
-            qLocation = new LatLng(qLal,qLng);
-
-            return qLocation;
-        }
-    return qLocation;
-    }
-
 
 
 

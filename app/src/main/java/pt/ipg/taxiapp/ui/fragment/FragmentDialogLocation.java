@@ -22,6 +22,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.data.DataBufferUtils;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -111,14 +112,40 @@ public class FragmentDialogLocation extends DialogFragment {
         });
 
         mAdapter.setOnItemClickListener(new LocationListAdapter.OnItemClickListener() {
+            String loc = new String();
             @Override
             public void onItemClick(View view, AutocompletePrediction obj, int position) {
-                // enviar PlaceId no array para marcar ponto
-                String[] str = new String[3];
-                str[0] = obj.getPrimaryText(null).toString();
-                str[1] = obj.getPlaceId();
-                sendDataResult(str);
-                dismissDialog();
+                loc = obj.getPrimaryText(null).toString();
+
+                //tentar geocode placeid para receber posição latlng
+                //https://stackoverflow.com/questions/48311806/get-longitude-and-latitude-from-a-google-places-result
+                PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi
+                        .getPlaceById(mGoogleApiClient, obj.getPlaceId());
+                placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                    @Override
+                    public void onResult(PlaceBuffer places) {
+                        if (!places.getStatus().isSuccess()) {
+                            // Request did not complete successfully
+                           // Log.e(TAG, "Place query did not complete. Error: " + places.getStatus().toString());
+                            places.release();
+                            return;
+                        }
+
+                        // Get the Place object from the buffer.
+                        final Place place = places.get(0);
+                        Double lat = place.getLatLng().latitude; Double lng = place.getLatLng().longitude;
+                        LatLng latLngDrop = new LatLng(lat, lng);
+
+                        sendDataResult(loc, latLngDrop);
+                        dismissDialog();
+                    }
+
+
+                });
+
+
+
+
             }
         });
 
@@ -207,9 +234,9 @@ public class FragmentDialogLocation extends DialogFragment {
         }
     };
 
-    private void sendDataResult(String[] loc) {
+    private void sendDataResult(String loc, LatLng pos) {
         if (callbackResult != null) {
-            callbackResult.sendResult(request_code, loc);
+            callbackResult.sendResult(request_code, loc, pos);
          }
     }
 
@@ -247,7 +274,7 @@ public class FragmentDialogLocation extends DialogFragment {
     }
 
     public interface CallbackResult {
-        void sendResult(int requestCode, String[] loc);
+        void sendResult(int requestCode, String loc, LatLng pos);
     }
 
 }

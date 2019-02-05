@@ -58,6 +58,8 @@ dependencies {
 
     implementation 'com.google.maps.android:android-maps-utils:0.4.3'
 
+
+
     // retrofit para o JSON!!!
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'

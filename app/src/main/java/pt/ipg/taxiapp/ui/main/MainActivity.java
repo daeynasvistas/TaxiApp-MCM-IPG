@@ -33,12 +33,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -60,11 +54,13 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.RideAdapter;
 import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
+import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.ui.fragment.FragmentDialogLocation;
 import pt.ipg.taxiapp.utils.CurrentLocationListener;
 import pt.ipg.taxiapp.utils.MapHelper;
@@ -240,20 +236,20 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Taxi> taxis) {
                 //    Tools.displayCarAroundMarkers(MainActivity.this, mMap);
                 // update o mapa com novos Taxis .. Vers.0.4
-                //int size = taxiViewModel.getAllTaxis().getValue().size();
-                //Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
+                int size = taxiViewModel.getAllTaxis().getValue().size();
+                Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
 
                 //List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);
-                mMap.clear();
-
-
-               // LatLng origin = new LatLng(40.777570, -7.349922);
-               // LatLng destination = new LatLng(40.827570, -7.349922);
-               // mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, true));
-               // mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, false));
+                List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);  // recebe da base dados room
+              //  mMap.clear(); // ALTERAR!!!!! binding xml devia funcionar
 
                 // REVER 0.7 Nãofunciona!!!!!!!! ------------------------------ ToDO
-                //drawPolyLine(origin, destination);
+            //    LatLng point = new LatLng(40.777570, -7.349922);
+            //    LatLng origin = Tools.getRandomLocation(point,2500);
+            //    LatLng destination = Tools.getRandomLocation(point,2500);
+
+                //  drawPolyLine(origin, destination);
+
 
                 try {
                     LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
@@ -262,7 +258,10 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
-               Tools.displayCarAroundMarkers(MainActivity.this, mMap);
+               Tools.displayCarAroundMarkers(MainActivity.this, mMap, items);
+
+
+
             }
         });
 
@@ -271,10 +270,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
+
         GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
-       // geoApiContext.setConnectTimeout(10, TimeUnit.SECONDS);
-      //  DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext).origin(origin).destination(destination)
-       //         .alternatives(true).region("pt").mode(TravelMode.DRIVING);
+        geoApiContext.setConnectTimeout(2, TimeUnit.SECONDS);
+        geoApiContext.setQueryRateLimit(3);
+
 
        DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext);
        d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
@@ -298,37 +298,14 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable e) {
-
+                Toast.makeText(MainActivity.this, "Polyline problema", Toast.LENGTH_SHORT).show();
             }
         });
 
-    }
-
-
-    private void getLatLng (LatLng origin, LatLng destination, String pos) {
-
-
-
-       /* if (mGoogleApiClient.isConnected()) {
-            //https://stackoverflow.com/questions/34018781/how-to-get-country-specific-results-in-google-places-api-for-autocompletepredict/39785267
-            com.google.android.gms.common.api.PendingResult<PlaceBuffer> result;
-            result = Places.GeoDataApi.getPlaceById(mGoogleApiClient, "ChIJrTLr-GyuEmsRBfy61i59si0");
-            PlaceBuffer placeBuffer = result.await(60, TimeUnit.SECONDS);
-            final Status status = placeBuffer.getStatus();
-            if (!status.isSuccess()) {
-                placeBuffer.release();
-                Toast.makeText(ctx, "Error : " + status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-            }
-            // dados aqui ...
-            final Place mPlace = placeBuffer.get(0);
-            double qLal = mPlace.getLatLng().latitude;
-            double qLng = mPlace.getLatLng().longitude;
-            qLocation = new LatLng(qLal,qLng);
-
-            return qLocation;
-        }*/
+ /*       */
 
     }
+
 
 
 
@@ -387,9 +364,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
-                com.google.android.gms.maps.model.LatLng point = new com.google.android.gms.maps.model.LatLng(40.777570, -7.349922);
-                com.google.android.gms.maps.model.LatLng randPin = Tools.getRandomLocation(point,2500);
-                taxiViewModel.insert(new Taxi("OK","Daniel@ept.pt","foto(alterar)",0,randPin.latitude,randPin.longitude));
+                LatLng point = new LatLng(40.777570, -7.349922);
+                LatLng randPin = Tools.getRandomLocation(point,2500);
+                taxiViewModel.insert(new Taxi("OK","Daniel@ept.pt","foto(alterar)",0,randPin.lat,randPin.lng));
 
             }
         });
@@ -421,30 +398,23 @@ public class MainActivity extends AppCompatActivity {
 
         fragment.setOnCallbackResult(new FragmentDialogLocation.CallbackResult() {
             @Override
-            public void sendResult(int requestCode, String[] loc) {
-                LatLng destination = new LatLng(40.827570, -7.349922);
-                LatLng origin = new LatLng(40.777570, -7.349922);
+            public void sendResult(int requestCode, String loc, LatLng pos) {
+              //  LatLng destination = new LatLng(40.827570, -7.349922);
+              //  LatLng origin = new LatLng(40.777570, -7.349922);
 
                 if (requestCode == 5000) {
-                    et_pickup.setText(loc[0]);
-                    // fazer cenas aqui -- toDO
-                    // colocar origem no mapa
+                    et_pickup.setText(loc);
+                    // fazer cenas aqui -- toDO colocar origem no mapa
                    // https://stackoverflow.com/questions/25928948/get-lat-lang-from-a-place-id-returned-by-autocomplete-place-api
-                    //LatLng origin = loc.getLatLng(); //que vem no objecto .. acho que é melhor método
-
-
-                    //
-                    getLatLng(origin,destination,"");
-                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, origin, false));
-
-
+                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
 
                 } else if (requestCode == 6000) {
-                    // fazer cenas aqui -- toDO
-                    // colocar destino no mapa
-
-                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, destination, false));
+                    et_destination.setText(loc);
+                    // fazer cenas aqui -- toDO colocar destino no mapa
+                    mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
                 }
+
+                // guardar trajeto na base dados local room  --- ToDo --> guardar trajeto DB
             }
         });
 
