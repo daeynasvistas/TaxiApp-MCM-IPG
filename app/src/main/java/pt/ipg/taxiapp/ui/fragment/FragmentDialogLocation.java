@@ -227,6 +227,7 @@ public class FragmentDialogLocation extends DialogFragment {
         return null;
     }
 
+
     private OnConnectionFailedListener onConnectionFailedListener = new OnConnectionFailedListener() {
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {

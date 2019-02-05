@@ -255,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
                     LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, myLoc, true));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                   // e.printStackTrace();
                 }
                 // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
                Tools.displayCarAroundMarkers(MainActivity.this, mMap, items);
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+// PROBLEMAS com: E/AndroidRuntime: FATAL EXCEPTION: Rate Limited Dispatcher
     private void drawPolyLine(LatLng origin, LatLng destination) {
 
         GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
