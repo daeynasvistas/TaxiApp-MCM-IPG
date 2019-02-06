@@ -22,18 +22,7 @@ public class Constant {
         return r.nextInt(max - min) + min;
     }
 
-    public static List<TaxiPosition> getTaxiAroundData(Context ctx) {
-        List<TaxiPosition> items = new ArrayList<>();
-        String[] locations = ctx.getResources().getStringArray(R.array.car_location);
-        for (int i = 0; i < locations.length; i++) {
-            TaxiPosition item = new TaxiPosition();
-            String[] loc = locations[i].split("#");
-            item.latLng = new LatLng(Double.parseDouble(loc[0]), Double.parseDouble(loc[1]));
-            item.rotation = getRandomIndex(rnd, 0, 360);
-            items.add(item);
-        }
-        return items;
-    }
+
 
     public static List<TaxiPosition> getTaxiArounddb(List<Taxi> taxi) {
         List<TaxiPosition> pins = new ArrayList<>();

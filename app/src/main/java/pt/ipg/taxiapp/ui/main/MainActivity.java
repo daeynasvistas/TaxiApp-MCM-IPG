@@ -236,8 +236,8 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Taxi> taxis) {
                 //    Tools.displayCarAroundMarkers(MainActivity.this, mMap);
                 // update o mapa com novos Taxis .. Vers.0.4
-                int size = taxiViewModel.getAllTaxis().getValue().size();
-                Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
+                //int size = taxiViewModel.getAllTaxis().getValue().size();
+                //Tools.showToastMiddle(getApplicationContext(), Integer.toString(size));
 
                 //List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);
                 List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);  // recebe da base dados room
@@ -364,6 +364,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
+
+
+
                 LatLng point = new LatLng(40.777570, -7.349922);
                 LatLng randPin = Tools.getRandomLocation(point,2500);
                 taxiViewModel.insert(new Taxi("OK","Daniel@ept.pt","foto(alterar)",0,randPin.lat,randPin.lng));
@@ -414,7 +417,8 @@ public class MainActivity extends AppCompatActivity {
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
                 }
 
-                // guardar trajeto na base dados local room  --- ToDo --> guardar trajeto DB
+                // guardar trajeto TEMPORÁRIO na base dados local room  --- ToDo --> guardar trajeto DB
+
             }
         });
 

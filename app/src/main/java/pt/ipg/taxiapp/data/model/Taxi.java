@@ -1,12 +1,11 @@
 package pt.ipg.taxiapp.data.model;
 
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "taxi_table")
 public class Taxi {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey(autoGenerate = true) // remover quando receber JSON, usar mongoDb _id
     private int id;
     private String nome;
     private String email;
