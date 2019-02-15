@@ -35,10 +35,13 @@ import java.util.Random;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.Constant;
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.data.model.User;
 import pt.ipg.taxiapp.data.persistance.local.PrefManager;
 import pt.ipg.taxiapp.ui.authentication.LoginActivity;
+
+import static pt.ipg.taxiapp.data.Constant.getBookingCode;
 
 public class Tools {
 
@@ -99,6 +102,50 @@ public class Tools {
         }
     }
 
+    public static List<Booking> getBookingActive(Context ctx) {
+        return getBooking(ctx).subList(0, 1);
+    }
+
+    private static List<Booking> getBooking(Context ctx) {
+        List<Booking> items = new ArrayList<>();
+        String[] status = ctx.getResources().getStringArray(R.array.booking_status);
+        String[] date = ctx.getResources().getStringArray(R.array.booking_date);
+        String[] pickup = ctx.getResources().getStringArray(R.array.booking_pickup);
+        String[] destination = ctx.getResources().getStringArray(R.array.booking_destination);
+        String[] time = ctx.getResources().getStringArray(R.array.booking_time);
+        String[] ride_class = ctx.getResources().getStringArray(R.array.booking_ride_class);
+        String[] payment = ctx.getResources().getStringArray(R.array.booking_payment);
+
+        for (int i = 0; i < status.length; i++) {
+            Booking item = new Booking();
+            item.status = status[i];
+            item.date = date[i];
+            item.pickup = pickup[i];
+            item.destination = destination[i];
+            item.time = time[i];
+            item.ride_class = ride_class[i];
+            item.payment = payment[i];
+            item.booking_code = getBookingCode();
+            if (ride_class.equals("Economy")) {
+                item.fare = "$6.75";
+            } else if (ride_class.equals("Large")) {
+                item.fare = "$10.4";
+            } else if (ride_class.equals("Premium")) {
+                item.fare = "$13.99";
+            } else {
+                item.fare = "$9.25";
+            }
+            items.add(item);
+        }
+        return items;
+    }
+
+
+
+    public static List<Booking> getBookingHistory(Context ctx) {
+        String[] status = ctx.getResources().getStringArray(R.array.booking_status);
+        return getBooking(ctx).subList(1, status.length);
+    }
 
 
     //-------------------------- Vers 0.2 ---------------------------
@@ -190,6 +237,7 @@ public class Tools {
         }
     }
 
+    
 
     public static int dpToPx(Context c, int dp) {
         Resources r = c.getResources();

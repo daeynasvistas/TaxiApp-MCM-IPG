@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.location.Geocoder;
@@ -58,6 +59,7 @@ import java.util.concurrent.TimeUnit;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.RideAdapter;
 import pt.ipg.taxiapp.data.Constant;
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
@@ -86,7 +88,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_note, tv_promo, tv_payment;
     private EditText et_pickup, et_destination;
 
-
+    private LatLng origem;
+    private LatLng destino;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,7 +214,12 @@ public class MainActivity extends AppCompatActivity {
     private void onNavigationItemClick(MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id) {
-                case R.id.nav_about:
+            /*
+            case R.id.nav_booking:
+                startActivity(new Intent(this, ActivityBooking.class));
+                break;
+*/
+            case R.id.nav_about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
                 builder.setMessage(getString(R.string.about_text));
@@ -271,10 +279,10 @@ public class MainActivity extends AppCompatActivity {
 // PROBLEMAS com: E/AndroidRuntime: FATAL EXCEPTION: Rate Limited Dispatcher
     private void drawPolyLine(LatLng origin, LatLng destination) {
 
-        GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
-        geoApiContext.setConnectTimeout(2, TimeUnit.SECONDS);
-        geoApiContext.setQueryRateLimit(3);
-
+     //   GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+     //   geoApiContext.setConnectTimeout(2, TimeUnit.SECONDS);
+     //   geoApiContext.setQueryRateLimit(3);
+/*
 
        DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext);
        d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
@@ -363,14 +371,26 @@ public class MainActivity extends AppCompatActivity {
         ((View) findViewById(R.id.lyt_request_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
+                // passar con putextra ou simplesmente assim com um método da class
+                Booking obj = new Booking();
+
+                obj.payment = "Dinheiro";
+                obj.ride_class = "ECONÓMICO";
+                obj.pickup = String.valueOf(et_pickup.getText());
+                obj.destination = String.valueOf(et_destination.getText());
+                obj.origem = origem;
+                obj.destino = destino;
 
 
+                ActivityRequestRide.navigate(MainActivity.this, obj);
 
-                LatLng point = new LatLng(40.777570, -7.349922);
+                //  startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
+
+                // DEBUG base de dados room local
+/*              LatLng point = new LatLng(40.777570, -7.349922);
                 LatLng randPin = Tools.getRandomLocation(point,2500);
                 taxiViewModel.insert(new Taxi("OK","Daniel@ept.pt","foto(alterar)",0,randPin.lat,randPin.lng));
-
+*/
             }
         });
     }
@@ -407,12 +427,14 @@ public class MainActivity extends AppCompatActivity {
 
                 if (requestCode == 5000) {
                     et_pickup.setText(loc);
+                    origem = pos;
                     // fazer cenas aqui -- toDO colocar origem no mapa
                    // https://stackoverflow.com/questions/25928948/get-lat-lang-from-a-place-id-returned-by-autocomplete-place-api
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
 
                 } else if (requestCode == 6000) {
                     et_destination.setText(loc);
+                    destino = pos;
                     // fazer cenas aqui -- toDO colocar destino no mapa
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
                 }

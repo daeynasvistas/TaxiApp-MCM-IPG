@@ -33,7 +33,10 @@
         <activity android:name=".ui.main.MainActivity" />
         <activity android:name=".ui.authentication.LoginActivity" />
         <activity android:name=".ui.authentication.RegisterActivity" />
-
+        <activity android:name=".ui.main.ActivityRequestRide" />
+        <activity android:name=".ui.main.ActivityBooking" />
+        <activity android:name=".ui.main.ActivityBookingHistoryDetails" />
+        <activity android:name=".ui.main.ActivityBookingActiveDetails" />
     </application>
 
 </manifest>

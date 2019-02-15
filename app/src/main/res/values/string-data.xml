@@ -48,4 +48,71 @@
     </string-array>
 
 
+
+    <!--history booking dummy data-->
+    <string-array name="booking_status">
+        <item>ON GOING</item>
+
+        <item>FINISHED</item>
+        <item>CANCELED</item>
+        <item>FINISHED</item>
+        <item>FINISHED</item>
+        <item>FINISHED</item>
+    </string-array>
+    <string-array name="booking_date">
+        <item>7 April 2018</item>
+
+        <item>10 April 2018</item>
+        <item>13 April 2018</item>
+        <item>22 April 2018</item>
+        <item>8 May 2018</item>
+        <item>11 May 2018</item>
+    </string-array>
+    <string-array name="booking_pickup">
+        <item>The Army Museum, Paris</item>
+
+        <item>Le Centre Pompidou, Paris</item>
+        <item>Eiffel Tower, Paris</item>
+        <item>Pont Alexandre III, Paris</item>
+        <item>Paris Dauphine University</item>
+        <item>Jeu de Paume, Paris</item>
+    </string-array>
+    <string-array name="booking_destination">
+        <item>Homme Museum, Paris</item>
+
+        <item>Louis Vuitton Foundation</item>
+        <item>Le Palais des Congres, Paris</item>
+        <item>Place du Trocadero, Paris</item>
+        <item>The Dome of Paris</item>
+        <item>Place de la Bastille, Paris</item>
+    </string-array>
+    <string-array name="booking_time">
+        <item>7:46 PM</item>
+
+        <item>3:20 PM</item>
+        <item>8:11 PM</item>
+        <item>11:05 AM</item>
+        <item>7:49 AM</item>
+        <item>10:31 PM</item>
+    </string-array>
+    <string-array name="booking_ride_class">
+        <item>Premium</item>
+
+        <item>Economy</item>
+        <item>Economy</item>
+        <item>Premium</item>
+        <item>Large</item>
+        <item>Premium</item>
+    </string-array>
+    <string-array name="booking_payment">
+        <item>Cash</item>
+
+        <item>Cash</item>
+        <item>Visa</item>
+        <item>Master</item>
+        <item>Cash</item>
+        <item>Visa</item>
+    </string-array>
+
+
 </resources>
