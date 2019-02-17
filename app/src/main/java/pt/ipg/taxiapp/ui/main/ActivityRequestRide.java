@@ -105,12 +105,7 @@ public class ActivityRequestRide extends AppCompatActivity {
         ((Button) dialog.findViewById(R.id.bt_ok)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Booking obj = booking;
-                /* Enviar novo objecto agora com o TAXI que aceitou
-                obj.payment = "VISA";
-                obj.ride_class = "ECONÓMICO";
-                obj.ride_class = "ECONÓMICO";
-                */
+                Booking obj = booking; // envio
                 ActivityBookingActiveDetails.navigate(ActivityRequestRide.this, obj);
                 dialog.dismiss();
                 finish();

@@ -371,15 +371,15 @@ public class MainActivity extends AppCompatActivity {
         ((View) findViewById(R.id.lyt_request_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // passar con putextra ou simplesmente assim com um método da class
+                // passar com putextra ou simplesmente assim com um método da class
                 Booking obj = new Booking();
 
                 obj.payment = "Dinheiro";
                 obj.ride_class = "ECONÓMICO";
                 obj.pickup = String.valueOf(et_pickup.getText());
                 obj.destination = String.valueOf(et_destination.getText());
-                obj.origem = origem;
-                obj.destino = destino;
+                //obj.origem = origem;
+                //obj.destino = destino;
 
 
                 ActivityRequestRide.navigate(MainActivity.this, obj);

@@ -133,17 +133,17 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
     public void configureMap(GoogleMap googleMap) {
         mMap = Tools.configBasicGoogleMap(googleMap);
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new com.google.android.gms.maps.model.LatLng(48.83711709, 2.31855601));
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new com.google.android.gms.maps.model.LatLng(40.5333333, -7.2666667));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(12.2f);
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
 
-        LatLng origin = booking.origem; //new LatLng(48.842948, 2.318795);
-        LatLng destination = booking.destino; //new LatLng(48.874050, 2.294372);
+      //  LatLng origin = booking.origem; //new LatLng(48.842948, 2.318795);
+       // LatLng destination = booking.destino; //new LatLng(48.874050, 2.294372);
 
-        displayMarker(origin, true);
-        displayMarker(destination, false);
+       // displayMarker(origin, true);
+       // displayMarker(destination, false);
 
        // drawPolyLine(origin, destination);
 

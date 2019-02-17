@@ -237,7 +237,7 @@ public class Tools {
         }
     }
 
-    
+
 
     public static int dpToPx(Context c, int dp) {
         Resources r = c.getResources();

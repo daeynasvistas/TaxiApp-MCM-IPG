@@ -69,7 +69,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CK 445 HT"
+                            android:text="00-AA-00"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                             android:textColor="@color/grey_very_hard"
                             android:textStyle="bold" />
@@ -84,7 +84,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ford S-Max"
+                            android:text="Audi A4"
                             android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                             android:textColor="@color/grey_very_hard" />
 
@@ -94,7 +94,7 @@
                         android:id="@+id/tv_seat_class"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Stephen A. H"
+                        android:text="Cristiano Ronaldo"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_text"
                         android:textStyle="bold" />
