@@ -13,6 +13,7 @@ import com.google.maps.model.LatLng;
 
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.persistance.dao.BookingDao;
 import pt.ipg.taxiapp.data.persistance.dao.TaxiDao;
 import pt.ipg.taxiapp.data.persistance.dao.UserDao;
 import pt.ipg.taxiapp.utils.Tools;
@@ -24,6 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
     public abstract TaxiDao taxiDao(); // taxis
     public abstract UserDao userDao(); // utilizador (talvez vário sno futuro Vers 1.1)
+    public abstract BookingDao bookingDao(); // Booking
 
     public static synchronized AppDatabase getInstance(Context context){
         if (instance == null){
