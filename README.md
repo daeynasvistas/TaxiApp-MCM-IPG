@@ -17,6 +17,16 @@
 - [x] Location working
 - [x] MyPosition onStart 
 - [x] GeoLocation Places
+- [X] Call taxi interface
+- [X] Detail of Active Ride
+- [ ] Save ride in room
+- [ ] Get Ride history from room
+
+## Vers. O.6
+![screenshot_20190220-163321 1](https://user-images.githubusercontent.com/2634610/53111924-f74bf580-3535-11e9-8be5-33ab3ba420fc.png)
+![screenshot_20190220-162936](https://user-images.githubusercontent.com/2634610/53111941-0763d500-3536-11e9-8dc6-4ea9f7da1e3f.png)
+![screenshot_20190220-162950](https://user-images.githubusercontent.com/2634610/53111963-18ace180-3536-11e9-99e1-ff9132bbae89.png)
+![screenshot_20190220-162956](https://user-images.githubusercontent.com/2634610/53111992-2c584800-3536-11e9-869f-15e1d00a53f0.png)
 
 
 ## Vers. O.5

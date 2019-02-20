@@ -45,8 +45,9 @@ public class ActivityBookingHistoryDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(null);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        Tools.setCompleteSystemBarLight(this);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+       // Tools.setCompleteSystemBarLight(this);
     }
 
     private void initComponent() {

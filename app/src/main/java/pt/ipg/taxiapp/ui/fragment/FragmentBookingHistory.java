@@ -38,7 +38,10 @@ public class FragmentBookingHistory extends Fragment {
         recyclerView.setHasFixedSize(true);
 
         //set data and list adapter
+        // receber da API ---todo vers 0.7
         List<Booking> bookingList = Tools.getBookingHistory(getActivity());
+
+
         BookingListAdapter mAdapter = new BookingListAdapter(getActivity(), bookingList);
         recyclerView.setAdapter(mAdapter);
 
