@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_bg"
+    android:fitsSystemWindows="true">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/white"
+            app:contentInsetStartWithNavigation="0dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/Toolbar.Light">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="20 April 2018"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_very_hard"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8:34 PM"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/grey_very_hard"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="@dimen/spacing_large"
+                    android:layout_height="0dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:scrollingCache="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_medium">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_regular" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_regular"
+                android:layout_marginRight="@dimen/spacing_regular"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/spacing_large">
+
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:src="@drawable/profile" />
+
+                        <View
+                            android:layout_width="@dimen/spacing_middle"
+                            android:layout_height="0dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:paddingTop="@dimen/spacing_medium">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="00-AA-00"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_text"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_seat_class"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cristiano Ronaldo"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                android:textColor="@color/grey_very_hard" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_rectangle_finished"
+                            android:paddingBottom="@dimen/spacing_small"
+                            android:paddingLeft="@dimen/spacing_middle"
+                            android:paddingRight="@dimen/spacing_middle"
+                            android:paddingTop="@dimen/spacing_small"
+                            android:text="FINISHED"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_bg" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_large">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Fare"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_hard"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/payment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Cash"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                android:textColor="@color/grey_text" />
+
+                            <View
+                                android:layout_width="@dimen/spacing_regular"
+                                android:layout_height="0dp" />
+
+                            <TextView
+                                android:id="@+id/fare"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="$10.4"
+                                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                                android:textColor="@color/price_color"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_regular" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Booking Id"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_hard"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/booking_code"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="XTU88526WA"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                android:textColor="@color/grey_text" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_regular" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Class"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_hard"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:id="@+id/ride_class"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Premium"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                android:textColor="@color/grey_text" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_large" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:paddingBottom="@dimen/spacing_middle"
+                                android:paddingTop="@dimen/spacing_middle">
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:background="@drawable/shape_circle_solid"
+                                    android:padding="3dp"
+                                    android:src="@drawable/ic_origin" />
+
+                                <View
+                                    android:layout_width="2dp"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/shape_dash_line_vert" />
+
+                                <ImageView
+                                    android:layout_width="14dp"
+                                    android:layout_height="14dp"
+                                    android:src="@drawable/shape_circle_outline" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="@dimen/spacing_large"
+                                android:layout_height="0dp" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Inicio"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                    android:textColor="@color/grey_very_hard" />
+
+                                <TextView
+                                    android:id="@+id/pickup"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text=""
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:textColor="@color/grey_text"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="@dimen/spacing_large" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Destino"
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                    android:textColor="@color/grey_very_hard" />
+
+                                <TextView
+                                    android:id="@+id/destination"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text=""
+                                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                    android:textColor="@color/grey_text"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_large" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nota ao condutor"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_hard"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="@dimen/spacing_medium" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:text="Notificação do condutor, pode ser necessário"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                android:textColor="@color/grey_text" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_regular" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/spacing_regular"
+                android:layout_marginRight="@dimen/spacing_regular"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="1dp"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_large">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/como_clasifica_a_sua_viagem"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:textColor="@color/grey_text"
+                        android:textStyle="bold" />
+
+                    <android.support.v7.widget.AppCompatRatingBar
+                        android:id="@+id/rating"
+                        style="@style/CustomRatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:numStars="5"
+                        android:rating="5"
+                        android:stepSize="1"
+                        android:theme="@style/CustomRatingBar" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spacing_regular" />
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

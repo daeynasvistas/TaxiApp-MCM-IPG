@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.model.LatLng;
 
 
 import pt.ipg.taxiapp.data.model.Taxi;
@@ -55,7 +55,7 @@ public abstract class AppDatabase extends RoomDatabase {
             LatLng point = new LatLng(40.777570, -7.349922);
             for(int i=0;i<50;i++){
                 LatLng randPin = Tools.getRandomLocation(point,2500);
-                taxiDao.insert(new Taxi("Daniel Mendes","Daniel@ept.pt","foto(alterar)",0,randPin.latitude,randPin.longitude));
+                taxiDao.insert(new Taxi("Daniel Mendes","Daniel@ept.pt","foto(alterar)",0,randPin.lat,randPin.lng));
             }
             return null;
         }

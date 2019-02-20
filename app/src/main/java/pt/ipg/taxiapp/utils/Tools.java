@@ -24,7 +24,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
+//import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -34,10 +35,13 @@ import java.util.Random;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.Constant;
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.data.model.User;
 import pt.ipg.taxiapp.data.persistance.local.PrefManager;
 import pt.ipg.taxiapp.ui.authentication.LoginActivity;
+
+import static pt.ipg.taxiapp.data.Constant.getBookingCode;
 
 public class Tools {
 
@@ -98,6 +102,50 @@ public class Tools {
         }
     }
 
+    public static List<Booking> getBookingActive(Context ctx) {
+        return getBooking(ctx).subList(0, 1);
+    }
+
+    private static List<Booking> getBooking(Context ctx) {
+        List<Booking> items = new ArrayList<>();
+        String[] status = ctx.getResources().getStringArray(R.array.booking_status);
+        String[] date = ctx.getResources().getStringArray(R.array.booking_date);
+        String[] pickup = ctx.getResources().getStringArray(R.array.booking_pickup);
+        String[] destination = ctx.getResources().getStringArray(R.array.booking_destination);
+        String[] time = ctx.getResources().getStringArray(R.array.booking_time);
+        String[] ride_class = ctx.getResources().getStringArray(R.array.booking_ride_class);
+        String[] payment = ctx.getResources().getStringArray(R.array.booking_payment);
+
+        for (int i = 0; i < status.length; i++) {
+            Booking item = new Booking();
+            item.status = status[i];
+            item.date = date[i];
+            item.pickup = pickup[i];
+            item.destination = destination[i];
+            item.time = time[i];
+            item.ride_class = ride_class[i];
+            item.payment = payment[i];
+            item.booking_code = getBookingCode();
+            if (ride_class.equals("Economy")) {
+                item.fare = "$6.75";
+            } else if (ride_class.equals("Large")) {
+                item.fare = "$10.4";
+            } else if (ride_class.equals("Premium")) {
+                item.fare = "$13.99";
+            } else {
+                item.fare = "$9.25";
+            }
+            items.add(item);
+        }
+        return items;
+    }
+
+
+
+    public static List<Booking> getBookingHistory(Context ctx) {
+        String[] status = ctx.getResources().getStringArray(R.array.booking_status);
+        return getBooking(ctx).subList(1, status.length);
+    }
 
 
     //-------------------------- Vers 0.2 ---------------------------
@@ -147,12 +195,16 @@ public class Tools {
             return false;
         }
     }
+
+    // para debug é mais prático
     public static void showToastMiddle(Context ctx, String message) {
         Toast toast = Toast.makeText(ctx, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
+
+    // melhorar para outros servicos
     public static void checkInternetConnection(Context ctx) {
         if (!isConnect(ctx)) {
             showToastMiddle(ctx, "Não tens internet Amigo!!");
@@ -178,11 +230,19 @@ public class Tools {
 
 
 
-    public static void displayCarAroundMarkers(Activity act, GoogleMap googleMap) {
-        List<TaxiPosition> items = Constant.getTaxiAroundData(act);
+    public static void displayCarAroundMarkers(Activity act, GoogleMap googleMap, List<TaxiPosition> items) {
+        //List<TaxiPosition> items = Constant.getTaxiAroundData(act); // remover e ler da base dados
         for (TaxiPosition c : items) {
             displayMarker(act, googleMap, c);
         }
+    }
+
+    public static void displaySingleCarAroundMarker(Activity act, GoogleMap googleMap, LatLng origem) {
+        LatLng randPin = Tools.getRandomLocation(origem,1500);
+        TaxiPosition pin = new TaxiPosition();
+        pin.latLng = new com.google.android.gms.maps.model.LatLng(randPin.lat, randPin.lng);
+        displayMarker(act, googleMap, pin);
+
     }
 
 
@@ -220,13 +280,13 @@ public class Tools {
         List<LatLng> randomPoints = new ArrayList<>();
         List<Float> randomDistances = new ArrayList<>();
         Location myLocation = new Location("");
-        myLocation.setLatitude(point.latitude);
-        myLocation.setLongitude(point.longitude);
+        myLocation.setLatitude(point.lat);
+        myLocation.setLongitude(point.lng);
 
         //This is to generate 10 random points
         for(int i = 0; i<10; i++) {
-            double x0 = point.latitude;
-            double y0 = point.longitude;
+            double x0 = point.lat;
+            double y0 = point.lng;
 
             Random random = new Random();
 
@@ -248,8 +308,8 @@ public class Tools {
             LatLng randomLatLng = new LatLng(foundLatitude, foundLongitude);
             randomPoints.add(randomLatLng);
             Location l1 = new Location("");
-            l1.setLatitude(randomLatLng.latitude);
-            l1.setLongitude(randomLatLng.longitude);
+            l1.setLatitude(randomLatLng.lat);
+            l1.setLongitude(randomLatLng.lng);
             randomDistances.add(l1.distanceTo(myLocation));
         }
         //Get nearest point to the centre

@@ -65,4 +65,19 @@
     <string name="erro_username_existe">Esste username já está registado</string>
 
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Strings gerais na applicação -->
+    <string name="found_driver_msg">Encontramos um Taxi para si, \nBoa viagem!</string>
+    <string name="Confirmacao">Confirmação</string>
+    <string name="Cancelar_busca">Tem a certeza que pretende cancelar a busca?</string>
+    <string name="Sim">SIM</string>
+    <string name="Busca_cancelada">Busca cancelada</string>
+    <string name="Nao">NÃO</string>
+    <string name="booking_historico">Booking Histórico</string>
+    <string name="Historico">HISTÓRICO</string>
+    <string name="historico_de_trajectos">Histórico de Trajectos</string>
+    <string name="como_clasifica_a_sua_viagem">Como clasifica a sua viagem?</string>
+
+
 </resources>

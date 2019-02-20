@@ -5,11 +5,13 @@ import android.content.res.TypedArray;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import pt.ipg.taxiapp.R;
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
@@ -22,18 +24,7 @@ public class Constant {
         return r.nextInt(max - min) + min;
     }
 
-    public static List<TaxiPosition> getTaxiAroundData(Context ctx) {
-        List<TaxiPosition> items = new ArrayList<>();
-        String[] locations = ctx.getResources().getStringArray(R.array.car_location);
-        for (int i = 0; i < locations.length; i++) {
-            TaxiPosition item = new TaxiPosition();
-            String[] loc = locations[i].split("#");
-            item.latLng = new LatLng(Double.parseDouble(loc[0]), Double.parseDouble(loc[1]));
-            item.rotation = getRandomIndex(rnd, 0, 360);
-            items.add(item);
-        }
-        return items;
-    }
+
 
     public static List<TaxiPosition> getTaxiArounddb(List<Taxi> taxi) {
         List<TaxiPosition> pins = new ArrayList<>();
@@ -70,4 +61,32 @@ public class Constant {
         }
         return items;
     }
+
+
+
+    public static String getBookingCode() {
+        char[] numbs = "1234567890".toCharArray();
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+        StringBuilder sb = new StringBuilder();
+        Random random = new SecureRandom();
+        for (int i = 0; i < 2; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        for (int i = 0; i < 4; i++) {
+            char c = numbs[random.nextInt(numbs.length)];
+            sb.append(c);
+        }
+        for (int i = 0; i < 2; i++) {
+            char c = chars[random.nextInt(chars.length)];
+            sb.append(c);
+        }
+        return sb.toString();
+    }
+
+
+
+
+
+
 }

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_booking"
             android:icon="@drawable/ic_about"
-            android:title="Cenas ..." />
+            android:title="@string/historico_de_trajectos" />
 
         <item
             android:id="@+id/nav_about"

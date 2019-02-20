@@ -6,14 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.model.LatLng;
 
+import java.util.concurrent.TimeUnit;
+
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.ui.fragment.FragmentDialogLocation;
+import pt.ipg.taxiapp.ui.main.MainActivity;
 
 public class MapHelper {
 
@@ -55,5 +65,12 @@ public class MapHelper {
         return markerOptions;
         //mMap.addMarker(markerOptions);
     }
+
+
+
+
+
+
+
 
 }
