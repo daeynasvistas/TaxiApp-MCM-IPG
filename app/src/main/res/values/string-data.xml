@@ -50,6 +50,7 @@
 
 
     <!--history booking dummy data-->
+    <!-- Alterar e colocar da room database -->
     <string-array name="booking_status">
         <item>ON GOING</item>
 
