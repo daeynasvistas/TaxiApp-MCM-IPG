@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import com.google.maps.model.LatLng;
 
 
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.User;
 import pt.ipg.taxiapp.data.persistance.dao.BookingDao;
@@ -19,10 +20,11 @@ import pt.ipg.taxiapp.data.persistance.dao.UserDao;
 import pt.ipg.taxiapp.utils.Tools;
 
 // vers 0.5 com tax e user como tabelas
-@Database(entities = {Taxi.class, User.class},version = 1, exportSchema = false)
+@Database(entities = {Taxi.class, User.class, Booking.class},version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
+
     public abstract TaxiDao taxiDao(); // taxis
     public abstract UserDao userDao(); // utilizador (talvez vário sno futuro Vers 1.1)
     public abstract BookingDao bookingDao(); // Booking

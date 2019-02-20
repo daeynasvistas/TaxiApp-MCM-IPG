@@ -1,6 +1,7 @@
 package pt.ipg.taxiapp.data.model;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
 import com.google.maps.model.LatLng;
@@ -23,10 +24,20 @@ public class Booking implements Serializable {
     public String fare;
     public String booking_code;
 
-    public LatLng origem;
+    @Ignore
+    public LatLng origem;  // ignore em room ..nãopreciso guarda eé mais complexo fazer conversão
+    @Ignore
     public LatLng destino;
 
     public String origem_string;
     public String destino_string;
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
