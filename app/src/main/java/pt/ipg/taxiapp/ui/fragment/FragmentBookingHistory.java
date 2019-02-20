@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.adapter.BookingListAdapter;
+import pt.ipg.taxiapp.adapter.BookingAdapter;
 import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.ui.main.ActivityBookingHistoryDetails;
 import pt.ipg.taxiapp.utils.Tools;
@@ -40,13 +40,11 @@ public class FragmentBookingHistory extends Fragment {
         //set data and list adapter
         // receber da API ---todo vers 0.7
         List<Booking> bookingList = Tools.getBookingHistory(getActivity());
-
-
-        BookingListAdapter mAdapter = new BookingListAdapter(getActivity(), bookingList);
+        BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookingList);
         recyclerView.setAdapter(mAdapter);
 
         // on item list clicked
-        mAdapter.setOnItemClickListener(new BookingListAdapter.OnItemClickListener() {
+        mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Booking obj, int position) {
                 ActivityBookingHistoryDetails.navigate(getActivity(), obj);
