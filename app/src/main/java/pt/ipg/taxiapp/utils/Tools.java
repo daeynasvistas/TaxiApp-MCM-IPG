@@ -106,7 +106,7 @@ public class Tools {
         return getBooking(ctx).subList(0, 1);
     }
 
-    private static List<Booking> getBooking(Context ctx) {
+   private static List<Booking> getBooking(Context ctx) {
         List<Booking> items = new ArrayList<>();
         String[] status = ctx.getResources().getStringArray(R.array.booking_status);
         String[] date = ctx.getResources().getStringArray(R.array.booking_date);
@@ -116,6 +116,8 @@ public class Tools {
         String[] ride_class = ctx.getResources().getStringArray(R.array.booking_ride_class);
         String[] payment = ctx.getResources().getStringArray(R.array.booking_payment);
 
+
+        // TODO --- room receber histórico vers 0.7 -------------------------------------------------
         for (int i = 0; i < status.length; i++) {
             Booking item = new Booking();
             item.status = status[i];
@@ -126,6 +128,9 @@ public class Tools {
             item.ride_class = ride_class[i];
             item.payment = payment[i];
             item.booking_code = getBookingCode();
+
+            // alterar para ride na base dados room
+            /*
             if (ride_class.equals("Economy")) {
                 item.fare = "$6.75";
             } else if (ride_class.equals("Large")) {
@@ -135,6 +140,8 @@ public class Tools {
             } else {
                 item.fare = "$9.25";
             }
+            */
+
             items.add(item);
         }
         return items;

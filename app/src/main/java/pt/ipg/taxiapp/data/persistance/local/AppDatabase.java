@@ -53,10 +53,13 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         protected Void doInBackground(Void... voids) {
             LatLng point = new LatLng(40.777570, -7.349922);
+
+            // Receber lista de TAXi da API  -- todo vers 0.7
             for(int i=0;i<50;i++){
                 LatLng randPin = Tools.getRandomLocation(point,2500);
                 taxiDao.insert(new Taxi("Daniel Mendes","Daniel@ept.pt","foto(alterar)",0,randPin.lat,randPin.lng));
             }
+
             return null;
         }
 
