@@ -20,7 +20,7 @@ import pt.ipg.taxiapp.data.persistance.dao.UserDao;
 import pt.ipg.taxiapp.utils.Tools;
 
 // vers 0.5 com tax e user como tabelas
-@Database(entities = {Taxi.class, User.class, Booking.class},version = 1, exportSchema = false)
+@Database(entities = {Taxi.class, User.class, Booking.class},version = 2, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
