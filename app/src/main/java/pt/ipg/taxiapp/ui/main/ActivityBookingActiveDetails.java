@@ -77,6 +77,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Tools.setCompleteSystemBarLight(this);
     }
 
@@ -121,6 +122,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
     }
 
     private void initMapFragment() {
+        // aqui: https://developers.google.com/maps/documentation/android-sdk/intro
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -133,24 +135,62 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
     public void configureMap(GoogleMap googleMap) {
         mMap = Tools.configBasicGoogleMap(googleMap);
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new com.google.android.gms.maps.model.LatLng(40.5333333, -7.2666667));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(12.2f);
+
+        // reconstruir LntLat a partir das string do booking (problema envio putextra parecelable)   -- Todo rever melhor método vers 0.9
+        String[] latlongOrigem =  booking.origem_string.split(",");
+        double latitude_origem = Double.parseDouble(latlongOrigem[0]);
+        double longitude_origem = Double.parseDouble(latlongOrigem[1]);
+
+        String[] latlongDestino =  booking.destino_string.split(",");
+        double latitude_destino = Double.parseDouble(latlongDestino[0]);
+        double longitude_destino = Double.parseDouble(latlongDestino[1]);
+
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new com.google.android.gms.maps.model.LatLng(latitude_origem, longitude_origem));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(14.2f);
 
         mMap.moveCamera(center);
         mMap.animateCamera(zoom);
 
-      //  LatLng origin = booking.origem; //new LatLng(48.842948, 2.318795);
-       // LatLng destination = booking.destino; //new LatLng(48.874050, 2.294372);
+        LatLng origem = new LatLng(latitude_origem, longitude_origem);
+        //LatLng origin = booking.origem; //new LatLng(48.842948, 2.318795);   TODO -- problema com envio parceble .. talvez guarda database
+        LatLng destino = new LatLng(latitude_destino, longitude_destino);
 
-       // displayMarker(origin, true);
-       // displayMarker(destination, false);
+        displayMarker(origem, true);
+        displayMarker(destino, false);
 
-       // drawPolyLine(origin, destination);
-
-        //Tools.displaySingleCarAroundMarker(this, mMap);
+        drawPolyLine(origem, destino);  // todo .. problema com CC na API google ..
+        Tools.displaySingleCarAroundMarker(ActivityBookingActiveDetails.this, mMap,origem);  // todo ...  vers 0.8 colocar taxi a aproximar
     }
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
+        GeoApiContext context = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+        context.setConnectTimeout(10, TimeUnit.SECONDS);
+        DirectionsApiRequest d = DirectionsApi.newRequest(context);
+        d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
+        d.setCallback(new PendingResult.Callback<DirectionsResult>() {
+            @Override
+            public void onResult(DirectionsResult result) {
+                final PolylineOptions polylineOptions = new PolylineOptions().width(10).color(getResources().getColor(R.color.colorAccent)).geodesic(true);
+                for (DirectionsRoute d : result.routes) {
+                    for (LatLng l : d.overviewPolyline.decodePath()) {
+                        polylineOptions.add(new com.google.android.gms.maps.model.LatLng(l.lat, l.lng));
+                    }
+                }
+                // draw polyline
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        polyline = mMap.addPolyline(polylineOptions);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+
+
+            }
+        });
+
 
 
     }

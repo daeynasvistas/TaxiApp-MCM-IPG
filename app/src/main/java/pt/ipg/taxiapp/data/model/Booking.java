@@ -18,4 +18,7 @@ public class Booking implements Serializable {
     public LatLng origem;
     public LatLng destino;
 
+    public String origem_string;
+    public String destino_string;
+
 }

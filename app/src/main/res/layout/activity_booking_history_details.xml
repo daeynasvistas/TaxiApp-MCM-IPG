@@ -418,7 +418,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="How was your trip?"
+                        android:text="@string/como_clasifica_a_sua_viagem"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:textColor="@color/grey_text"
                         android:textStyle="bold" />

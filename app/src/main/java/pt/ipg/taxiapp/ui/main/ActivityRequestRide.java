@@ -47,6 +47,7 @@ public class ActivityRequestRide extends AppCompatActivity {
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
 
         initComponent();
+        // todo fazar lado do taxi vers 1.0
         scheduleRequest();
 
         // for system bar in lollipop
@@ -73,16 +74,16 @@ public class ActivityRequestRide extends AppCompatActivity {
     private void showConfirmDialog() {
         handler.removeCallbacks(runnable);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmação");
-        builder.setMessage("Tem a certeza que pretende cancelar a busca?");
-        builder.setPositiveButton("SIM", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.Confirmacao);
+        builder.setMessage(R.string.Cancelar_busca);
+        builder.setPositiveButton(R.string.Sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Tools.showToastMiddle(getApplicationContext(), "Busca cancelada");
+                Tools.showToastMiddle(getApplicationContext(), getString(R.string.Busca_cancelada));
                 finish();
             }
         });
-        builder.setNegativeButton("NÃO", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.Nao, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 scheduleRequest();
@@ -122,6 +123,8 @@ public class ActivityRequestRide extends AppCompatActivity {
                 showFoundRide();
             }
         };
+
+        // pseudo busca de taxi ...  TODO fazer aplicação do lado do taxi para aceitar ride
         handler.postDelayed(runnable, 5000);
     }
 }

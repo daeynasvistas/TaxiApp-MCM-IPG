@@ -214,11 +214,11 @@ public class MainActivity extends AppCompatActivity {
     private void onNavigationItemClick(MenuItem menuItem) {
         int id = menuItem.getItemId();
         switch (id) {
-            /*
+
             case R.id.nav_booking:
                 startActivity(new Intent(this, ActivityBooking.class));
                 break;
-*/
+/**/
             case R.id.nav_about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
@@ -279,7 +279,7 @@ public class MainActivity extends AppCompatActivity {
 // PROBLEMAS com: E/AndroidRuntime: FATAL EXCEPTION: Rate Limited Dispatcher
     private void drawPolyLine(LatLng origin, LatLng destination) {
 
-     //   GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+      //  GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
      //   geoApiContext.setConnectTimeout(2, TimeUnit.SECONDS);
      //   geoApiContext.setQueryRateLimit(3);
 /*
@@ -374,15 +374,26 @@ public class MainActivity extends AppCompatActivity {
                 // passar com putextra ou simplesmente assim com um método da class
                 Booking obj = new Booking();
 
-                obj.payment = "Dinheiro";
-                obj.ride_class = "ECONÓMICO";
-                obj.pickup = String.valueOf(et_pickup.getText());
-                obj.destination = String.valueOf(et_destination.getText());
-                //obj.origem = origem;
-                //obj.destino = destino;
 
 
-                ActivityRequestRide.navigate(MainActivity.this, obj);
+                // verificar se existe origem e destino
+                if((origem!=null)&(destino!=null)){
+
+                    obj.payment = "Dinheiro";
+                    obj.ride_class = "ECONÓMICO";
+                    obj.pickup = String.valueOf(et_pickup.getText());
+                    obj.destination = String.valueOf(et_destination.getText());
+
+                    // NÃO PASSA DE FORMA DIRECTA  .. é necessário parcelable
+                    obj.origem_string = origem.toString();
+                    obj.destino_string = destino.toString();
+                    // passar obj
+                    ActivityRequestRide.navigate(MainActivity.this, obj);
+                }else{
+                     Toast.makeText(MainActivity.this, "Deve escolher um local de partida e uma localização de destino", Toast.LENGTH_LONG).show();
+
+                }
+
 
                 //  startActivity(new Intent(getApplicationContext(), ActivityRequestRide.class));
 

@@ -237,6 +237,13 @@ public class Tools {
         }
     }
 
+    public static void displaySingleCarAroundMarker(Activity act, GoogleMap googleMap, LatLng origem) {
+        LatLng randPin = Tools.getRandomLocation(origem,1500);
+        TaxiPosition pin = new TaxiPosition();
+        pin.latLng = new com.google.android.gms.maps.model.LatLng(randPin.lat, randPin.lng);
+        displayMarker(act, googleMap, pin);
+
+    }
 
 
     public static int dpToPx(Context c, int dp) {
