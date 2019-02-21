@@ -13,16 +13,17 @@ import pt.ipg.taxiapp.data.persistance.local.AppDatabase;
 public class BookingAppRepository {
     private BookingDao bookingDao;
     private LiveData<List<Booking>> allBookings;
+    private LiveData<List<Booking>> allActiveBookings;
 
     public BookingAppRepository(Application application){
         AppDatabase database = AppDatabase.getInstance(application);
         bookingDao = database.bookingDao();
         allBookings = bookingDao.getAllBookings();
+        allActiveBookings = bookingDao.getAllActiveBookings();
 
     }
 
     public void insert(Booking booking){
-
         new BookingAppRepository.InsertBookingAsyncTask(bookingDao).execute(booking);
     }
 
@@ -46,21 +47,27 @@ public class BookingAppRepository {
         return allBookings;
     }
 
+    public LiveData<List<Booking>> getAllActiveBookings() {
+        return allActiveBookings;
+    }
 
 
 // ------------------------------------------------------------------------
 
-    private static class InsertBookingAsyncTask extends AsyncTask<Booking, Void, Void> {
+    private static class InsertBookingAsyncTask extends AsyncTask<Booking, Void, Long> {
         private BookingDao bookingDao;
         private InsertBookingAsyncTask(BookingDao bookingDao){
             this.bookingDao = bookingDao;
         }
 
         @Override
-        protected Void doInBackground(Booking... bookings) {
-            bookingDao.insert(bookings[0]);
-            return null;
+        protected Long doInBackground(Booking... bookings) {
+            long ID = bookingDao.insert(bookings[0]);
+            return ID;
         }
+
+
+
     }
 
 

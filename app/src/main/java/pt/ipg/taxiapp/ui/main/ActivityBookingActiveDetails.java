@@ -1,10 +1,13 @@
 package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,12 +38,16 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
+import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.Taxi;
+import pt.ipg.taxiapp.data.model.TaxiPosition;
 import pt.ipg.taxiapp.data.persistance.dao.BookingDao;
+import pt.ipg.taxiapp.utils.MapHelper;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class ActivityBookingActiveDetails extends AppCompatActivity {
@@ -59,7 +66,8 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
     }
 
     private Booking booking;
-
+    private BookingViewModel bookingViewModel;
+    private TaxiViewModel taxiViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,24 +76,30 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
         // get extra object
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
-        // criar booking historico
-        // Todo --- alterar Status, String não parece correcto -- vers 0.8
-        // Todo ----alterar económico, van para enum -- vers 0.8
-        // Guarda booking em room -- vers 0.7
-        Booking newBooking = new Booking(
-                "ACTIVE",
-                booking.date,
-                booking.pickup,
-                booking.destination,
-                booking.time,
-                booking.ride_class,
-                booking.payment,
-                booking.fare,
-                booking.booking_code,
-                booking.origem_string,
-                booking.destino_string);
+        // substituir por room database
 
-     
+
+/* ----- DEBUG ----  APAGAR ------
+
+        taxiViewModel = ViewModelProviders.of(this).get(TaxiViewModel.class);
+        taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
+            @Override
+            public void onChanged(@Nullable List<Taxi> taxis) {
+                Tools.showToastMiddle(getApplicationContext(), "Change");
+                try {
+
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                }
+
+            }
+        });
+        taxiViewModel.insert(new Taxi("OK","Android@ept.pt","foto(alterar)",0,40.777570, -7.349922));
+//------------------  FIM DEBUG APAGAR ------
+
+*/
+        //Tools.showToastMiddle(getApplicationContext(), "Booking inserido");
+        //--------------------------------------------  insert FIM ---------------------
 
         initMapFragment();
         initToolbar();
@@ -104,7 +118,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
 
     private void initComponent() {
-        //TextView status = (TextView) findViewById(R.id.status);
+        TextView status = (TextView) findViewById(R.id.status);
         TextView payment = (TextView) findViewById(R.id.payment);
         TextView ride_class = (TextView) findViewById(R.id.ride_class);
         TextView pickup = (TextView) findViewById(R.id.pickup);

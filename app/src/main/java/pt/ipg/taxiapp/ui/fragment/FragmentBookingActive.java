@@ -1,5 +1,8 @@
 package pt.ipg.taxiapp.ui.fragment;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +18,11 @@ import java.util.List;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.BookingAdapter;
 import pt.ipg.taxiapp.data.model.Booking;
+import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.ui.main.ActivityBookingActiveDetails;
+import pt.ipg.taxiapp.ui.main.BookingViewModel;
+import pt.ipg.taxiapp.ui.main.MainActivity;
+import pt.ipg.taxiapp.ui.main.TaxiViewModel;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class FragmentBookingActive extends Fragment {
@@ -30,24 +37,40 @@ public class FragmentBookingActive extends Fragment {
         initComponent();
         return root_view;
     }
-
+    private BookingViewModel bookingViewModel;
     private void initComponent() {
         recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        //set data and list adapter
-        List<Booking> bookingList = Tools.getBookingActive(getActivity());
-        BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookingList);
-        recyclerView.setAdapter(mAdapter);
 
-        // on item list clicked
-        mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
+
+        //set data and list adapter
+        bookingViewModel = ViewModelProviders.of(this).get(BookingViewModel.class);
+        bookingViewModel.getAllActiveBookings().observe(this, new Observer<List<Booking>>() {
+
+
             @Override
-            public void onItemClick(View view, Booking obj, int position) {
-                ActivityBookingActiveDetails.navigate(getActivity(), obj);
+            public void onChanged(@Nullable List<Booking> bookings) {
+                BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookings);
+                recyclerView.setAdapter(mAdapter);
+             //   List<Booking> bookingList = bookings;
+
+                // on item list clicked
+                mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, Booking obj, int position) {
+                        ActivityBookingActiveDetails.navigate(getActivity(), obj);
+                    }
+                });
+
+
             }
         });
+
+
+       // List<Booking> bookingList = Tools.getBookingActive(getActivity());
+
     }
 
     @Override

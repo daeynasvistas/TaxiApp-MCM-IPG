@@ -37,10 +37,10 @@ public class ActivityBooking extends AppCompatActivity {
         ViewPager view_pager = (ViewPager) findViewById(R.id.view_pager);
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
-       // FragmentBookingActive fragmentBookingActive = new FragmentBookingActive();
+        FragmentBookingActive fragmentBookingActive = new FragmentBookingActive();
         FragmentBookingHistory fragmentBookingHistory = new FragmentBookingHistory();
 
-        //adapter.addFragment(fragmentBookingActive, "ACTIVE");
+        adapter.addFragment(fragmentBookingActive, "ACTIVE");
         adapter.addFragment(fragmentBookingHistory, getString(R.string.Historico));
 
         view_pager.setAdapter(adapter);

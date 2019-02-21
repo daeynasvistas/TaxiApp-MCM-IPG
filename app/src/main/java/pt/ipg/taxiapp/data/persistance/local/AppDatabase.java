@@ -22,7 +22,7 @@ import pt.ipg.taxiapp.utils.Tools;
 // vers 0.7 com tax, booking e user como tabelas
 @Database(entities = {Taxi.class,
                       User.class,
-                      Booking.class}, version = 2, exportSchema = false)
+                      Booking.class}, version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
@@ -34,7 +34,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static synchronized AppDatabase getInstance(Context context){
         if (instance == null){ // criar nova se não existe
             instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "taxi_database")
+                    AppDatabase.class, "taxi_database.db")
                     .fallbackToDestructiveMigration()
                     .addCallback(roomCallBack) // Populate database seeding
                     .build();

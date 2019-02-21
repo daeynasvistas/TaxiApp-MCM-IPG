@@ -32,9 +32,17 @@ public class Booking implements Serializable {
     public String origem_string;
     public String destino_string;
 
+    // Taxi--- Guarda assim paraser mais simples no ROOMM
+    public String matriculaTaxi;
+    public String modeloTaxi;
+    public String condutorTaxi;
+    public String imageTaxi;
+
 
     // criar construtor para guardar histórico
-    public Booking(String status, String date, String pickup, String destination, String time, String ride_class, String payment, String fare, String booking_code, String origem_string, String destino_string) {
+
+
+    public Booking(String status, String date, String pickup, String destination, String time, String ride_class, String payment, String fare, String booking_code, String origem_string, String destino_string, String matriculaTaxi, String modeloTaxi, String condutorTaxi, String imageTaxi) {
         this.status = status;
         this.date = date;
         this.pickup = pickup;
@@ -46,6 +54,11 @@ public class Booking implements Serializable {
         this.booking_code = booking_code;
         this.origem_string = origem_string;
         this.destino_string = destino_string;
+
+        this.matriculaTaxi = matriculaTaxi;
+        this.modeloTaxi = modeloTaxi;
+        this.condutorTaxi = condutorTaxi;
+        this.imageTaxi = imageTaxi;
     }
 
     // construtor vazio

@@ -15,7 +15,7 @@ import pt.ipg.taxiapp.data.model.Booking;
 @Dao
 public interface BookingDao {
     @Insert
-    void insert(Booking booking);
+    long insert(Booking booking);
 
     @Update
     void update(Booking booking);
@@ -28,5 +28,10 @@ public interface BookingDao {
 
     @Query("SELECT * FROM BOOKING_TABLE")
     LiveData<List<Booking>> getAllBookings();
+
+    //  @Query("SELECT * FROM user WHERE age > :minAge")
+    @Query("SELECT * FROM BOOKING_TABLE WHERE STATUS LIKE \"ACTIVE\"")
+    LiveData<List<Booking>> getAllActiveBookings();
+
 
 }

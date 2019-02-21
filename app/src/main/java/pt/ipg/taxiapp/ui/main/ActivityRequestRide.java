@@ -2,6 +2,7 @@ package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,6 +38,8 @@ public class ActivityRequestRide extends AppCompatActivity {
     }
 
     private Booking booking;
+    private BookingViewModel bookingViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,39 @@ public class ActivityRequestRide extends AppCompatActivity {
         ((Button) dialog.findViewById(R.id.bt_ok)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // receber taxi que aceitou a viagem
+                String matriculaTaxi = "00-AA-00";
+                String modeloTaxi = "Audi A4 preto";
+                String condutorTaxi = "Cristiano Ronaldo";
+                String imageTaxi = "profile.png";
+                // criar booking historico
+                // Todo --- alterar Status, String não parece correcto -- vers 0.8
+                // Todo ----alterar económico, van para enum -- vers 0.8
+                // guardar booking ACTIVE em room
+                bookingViewModel = ViewModelProviders.of(ActivityRequestRide.this).get(BookingViewModel.class);
+                Booking newBooking = new Booking(
+                        "ACTIVE",
+                        booking.date,
+                        booking.pickup,
+                        booking.destination,
+                        booking.time,
+                        booking.ride_class,
+                        booking.payment,
+                        booking.fare,
+                        booking.booking_code,
+                        booking.origem_string,
+                        booking.destino_string,
+                        matriculaTaxi,
+                        modeloTaxi,
+                        condutorTaxi,
+                        imageTaxi);
+
+                bookingViewModel.insert(newBooking);
+                Tools.showToastMiddle(getApplicationContext(), "Booking inserido em room");
+
+
+                // enviar booking ... TODO alterar para ler room em ActivityBookingActiveDetail .. não é preciso passar
                 Booking obj = booking; // envio
                 ActivityBookingActiveDetails.navigate(ActivityRequestRide.this, obj);
                 dialog.dismiss();

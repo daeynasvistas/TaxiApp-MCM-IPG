@@ -339,5 +339,10 @@ public class Tools {
     }
 
 
+    public static String getTime(LatLng origem, LatLng destino) {
+
+
+        return "10 Min";
+    }
 }
 
