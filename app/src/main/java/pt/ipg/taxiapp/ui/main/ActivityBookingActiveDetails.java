@@ -39,6 +39,8 @@ import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
+import pt.ipg.taxiapp.data.model.Taxi;
+import pt.ipg.taxiapp.data.persistance.dao.BookingDao;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class ActivityBookingActiveDetails extends AppCompatActivity {
@@ -58,6 +60,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
     private Booking booking;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,24 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
         // get extra object
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
+        // criar booking historico
+        // Todo --- alterar Status, String não parece correcto -- vers 0.8
+        // Todo ----alterar económico, van para enum -- vers 0.8
+        // Guarda booking em room -- vers 0.7
+        Booking newBooking = new Booking(
+                "ACTIVE",
+                booking.date,
+                booking.pickup,
+                booking.destination,
+                booking.time,
+                booking.ride_class,
+                booking.payment,
+                booking.fare,
+                booking.booking_code,
+                booking.origem_string,
+                booking.destino_string);
+
+     
 
         initMapFragment();
         initToolbar();

@@ -19,8 +19,10 @@ import pt.ipg.taxiapp.data.persistance.dao.TaxiDao;
 import pt.ipg.taxiapp.data.persistance.dao.UserDao;
 import pt.ipg.taxiapp.utils.Tools;
 
-// vers 0.5 com tax e user como tabelas
-@Database(entities = {Taxi.class, User.class, Booking.class},version = 2, exportSchema = false)
+// vers 0.7 com tax, booking e user como tabelas
+@Database(entities = {Taxi.class,
+                      User.class,
+                      Booking.class}, version = 2, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase instance;
@@ -30,7 +32,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract BookingDao bookingDao(); // Booking
 
     public static synchronized AppDatabase getInstance(Context context){
-        if (instance == null){
+        if (instance == null){ // criar nova se não existe
             instance = Room.databaseBuilder(context.getApplicationContext(),
                     AppDatabase.class, "taxi_database")
                     .fallbackToDestructiveMigration()
@@ -39,6 +41,8 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return instance;
     }
+
+
     private static RoomDatabase.Callback roomCallBack = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {

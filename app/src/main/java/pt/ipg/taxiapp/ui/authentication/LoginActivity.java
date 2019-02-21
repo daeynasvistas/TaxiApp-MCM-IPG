@@ -41,10 +41,10 @@ public class LoginActivity extends AppCompatActivity  {
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
+ /*   private static final String[] DUMMY_CREDENTIALS = new String[]{
             "daniel@ept.pt:123456789", "bar@example.com:world"
     };
-
+*/
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -248,16 +248,6 @@ public class LoginActivity extends AppCompatActivity  {
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-
-
-            // TODO: register the new account here.
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-
-
             Call<LoginResponse> call = Client
                     .getInstance().getApi().userLogin(mEmail, mPassword);
 
@@ -266,10 +256,11 @@ public class LoginActivity extends AppCompatActivity  {
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                     LoginResponse loginResponse = response.body();
                     mAuthTask = null;
+
                     if (response.code() ==200) {
                         // guardar token nas preferências -- melhor que na BD
-                         PrefManager.getInstance(LoginActivity.this)
-                                 .saveUser(loginResponse.getUser(), loginResponse.getId());// (User, token)
+                        PrefManager.getInstance(LoginActivity.this)
+                                .saveUser(loginResponse.getUser(), loginResponse.getId());// (User, token)
                         // --------------------------
                         showProgress(false);
                         Intent intent = new Intent(LoginActivity.this , MainActivity.class);
@@ -283,7 +274,7 @@ public class LoginActivity extends AppCompatActivity  {
                         showProgress(false);
                         mPasswordView.setError(getString(R.string.error_incorrect_password));
                         mPasswordView.requestFocus();
-                       // Toast.makeText(LoginActivity.this, "És hacker?", Toast.LENGTH_LONG).show();
+                        // Toast.makeText(LoginActivity.this, "És hacker?", Toast.LENGTH_LONG).show();
 
                     }
                 }
@@ -293,6 +284,16 @@ public class LoginActivity extends AppCompatActivity  {
 
                 }
             });
+
+            // TODO: register the new account here.
+            return false;
+        }
+
+
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+
 
 
         }

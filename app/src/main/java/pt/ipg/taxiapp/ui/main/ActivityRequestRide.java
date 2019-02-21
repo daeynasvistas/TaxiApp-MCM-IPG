@@ -47,7 +47,7 @@ public class ActivityRequestRide extends AppCompatActivity {
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
 
         initComponent();
-        // todo fazar lado do taxi vers 1.0
+        // todo fazer lado do taxi vers 1.0
         scheduleRequest();
 
         // for system bar in lollipop
