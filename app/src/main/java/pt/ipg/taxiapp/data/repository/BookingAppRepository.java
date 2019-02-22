@@ -14,12 +14,14 @@ public class BookingAppRepository {
     private BookingDao bookingDao;
     private LiveData<List<Booking>> allBookings;
     private LiveData<List<Booking>> allActiveBookings;
+    private LiveData<List<Booking>> allFinishedBookings;
 
     public BookingAppRepository(Application application){
         AppDatabase database = AppDatabase.getInstance(application);
         bookingDao = database.bookingDao();
         allBookings = bookingDao.getAllBookings();
         allActiveBookings = bookingDao.getAllActiveBookings();
+        allFinishedBookings = bookingDao.getAllFinishedBookings();
 
     }
 
@@ -42,15 +44,16 @@ public class BookingAppRepository {
 
     }
 
-
     public LiveData<List<Booking>> getAllBookings() {
         return allBookings;
     }
 
-    public LiveData<List<Booking>> getAllActiveBookings() {
-        return allActiveBookings;
+
+    public LiveData<List<Booking>> getAllActiveBookings() {return allActiveBookings;
     }
 
+    public LiveData<List<Booking>> getAllFinishedBookings() {return allFinishedBookings;
+    }
 
 // ------------------------------------------------------------------------
 

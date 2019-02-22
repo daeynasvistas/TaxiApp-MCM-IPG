@@ -1,6 +1,5 @@
 package pt.ipg.taxiapp.ui.fragment;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
@@ -18,12 +17,8 @@ import java.util.List;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.BookingAdapter;
 import pt.ipg.taxiapp.data.model.Booking;
-import pt.ipg.taxiapp.data.model.Taxi;
-import pt.ipg.taxiapp.ui.main.ActivityBookingActiveDetails;
+import pt.ipg.taxiapp.ui.main.ActivityBookingActive;
 import pt.ipg.taxiapp.ui.main.BookingViewModel;
-import pt.ipg.taxiapp.ui.main.MainActivity;
-import pt.ipg.taxiapp.ui.main.TaxiViewModel;
-import pt.ipg.taxiapp.utils.Tools;
 
 public class FragmentBookingActive extends Fragment {
 
@@ -43,24 +38,21 @@ public class FragmentBookingActive extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-
-
         //set data and list adapter
         bookingViewModel = ViewModelProviders.of(this).get(BookingViewModel.class);
+        // receber do room todos os ACTIVE getallactivebookings()
         bookingViewModel.getAllActiveBookings().observe(this, new Observer<List<Booking>>() {
-
-
             @Override
             public void onChanged(@Nullable List<Booking> bookings) {
+                // colocar room bookings database no adapter
                 BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookings);
                 recyclerView.setAdapter(mAdapter);
              //   List<Booking> bookingList = bookings;
 
-                // on item list clicked
                 mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, Booking obj, int position) {
-                        ActivityBookingActiveDetails.navigate(getActivity(), obj);
+                        ActivityBookingActive.navigate(getActivity(), obj);
                     }
                 });
 
@@ -68,7 +60,7 @@ public class FragmentBookingActive extends Fragment {
             }
         });
 
-
+        // substituido por room
        // List<Booking> bookingList = Tools.getBookingActive(getActivity());
 
     }

@@ -30,8 +30,9 @@ public interface BookingDao {
     LiveData<List<Booking>> getAllBookings();
 
     //  @Query("SELECT * FROM user WHERE age > :minAge")
-    @Query("SELECT * FROM BOOKING_TABLE WHERE STATUS LIKE \"ACTIVE\"")
+    @Query("SELECT * FROM BOOKING_TABLE WHERE STATUS LIKE \"ATIVO\"")
     LiveData<List<Booking>> getAllActiveBookings();
 
-
+    @Query("SELECT * FROM BOOKING_TABLE WHERE STATUS NOT LIKE \"ATIVO\"")
+    LiveData<List<Booking>> getAllFinishedBookings();
 }

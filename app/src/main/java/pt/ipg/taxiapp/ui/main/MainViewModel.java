@@ -14,18 +14,24 @@ import com.google.maps.model.LatLng;
 
 import java.util.List;
 
+import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.data.model.User;
+import pt.ipg.taxiapp.data.repository.BookingAppRepository;
 import pt.ipg.taxiapp.data.repository.UserAppRepository;
 
 
 public class MainViewModel extends AndroidViewModel {
     private UserAppRepository repository;
+
     private LiveData<List<User>> allUsers;
+
+
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = new UserAppRepository(application);
         allUsers = repository.getAllUsers();
+
     }
 
 

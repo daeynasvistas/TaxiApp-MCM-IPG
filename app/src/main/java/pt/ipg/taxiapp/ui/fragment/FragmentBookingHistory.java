@@ -1,5 +1,7 @@
 package pt.ipg.taxiapp.ui.fragment;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,7 +18,9 @@ import java.util.List;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.BookingAdapter;
 import pt.ipg.taxiapp.data.model.Booking;
-import pt.ipg.taxiapp.ui.main.ActivityBookingHistoryDetails;
+import pt.ipg.taxiapp.ui.main.ActivityBookingActive;
+import pt.ipg.taxiapp.ui.main.ActivityBookingHistory;
+import pt.ipg.taxiapp.ui.main.BookingViewModel;
 import pt.ipg.taxiapp.utils.Tools;
 
 public class FragmentBookingHistory extends Fragment {
@@ -32,24 +36,34 @@ public class FragmentBookingHistory extends Fragment {
         return root_view;
     }
 
+    private BookingViewModel bookingViewModel;
     private void initComponent() {
         recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
         //set data and list adapter
-        // receber da API ---todo vers 0.7
-        List<Booking> bookingList = Tools.getBookingHistory(getActivity());
-        BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookingList);
-        recyclerView.setAdapter(mAdapter);
-
-        // on item list clicked
-        mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
+        bookingViewModel = ViewModelProviders.of(this).get(BookingViewModel.class);
+        // receber do room todos os ACTIVE getallactivebookings()
+        bookingViewModel.getAllFinishedBookings().observe(this, new Observer<List<Booking>>() {
             @Override
-            public void onItemClick(View view, Booking obj, int position) {
-                ActivityBookingHistoryDetails.navigate(getActivity(), obj);
+            public void onChanged(@Nullable List<Booking> bookings) {
+                // colocar room bookings database no adapter
+                BookingAdapter mAdapter = new BookingAdapter(getActivity(), bookings);
+                recyclerView.setAdapter(mAdapter);
+                //   List<Booking> bookingList = bookings;
+
+                mAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, Booking obj, int position) {
+                        ActivityBookingHistory.navigate(getActivity(), obj);
+                    }
+                });
+
+
             }
         });
+
     }
 
     @Override

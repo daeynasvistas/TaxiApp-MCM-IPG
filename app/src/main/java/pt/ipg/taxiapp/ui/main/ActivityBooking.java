@@ -40,7 +40,7 @@ public class ActivityBooking extends AppCompatActivity {
         FragmentBookingActive fragmentBookingActive = new FragmentBookingActive();
         FragmentBookingHistory fragmentBookingHistory = new FragmentBookingHistory();
 
-        adapter.addFragment(fragmentBookingActive, "ACTIVE");
+        adapter.addFragment(fragmentBookingActive, "ATIVOS");
         adapter.addFragment(fragmentBookingHistory, getString(R.string.Historico));
 
         view_pager.setAdapter(adapter);

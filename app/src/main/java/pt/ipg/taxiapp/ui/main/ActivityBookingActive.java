@@ -1,13 +1,11 @@
 package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
-import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,19 +36,13 @@ import com.google.maps.model.DirectionsRoute;
 import com.google.maps.model.LatLng;
 import com.google.maps.model.TravelMode;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import pt.ipg.taxiapp.R;
-import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Booking;
-import pt.ipg.taxiapp.data.model.Taxi;
-import pt.ipg.taxiapp.data.model.TaxiPosition;
-import pt.ipg.taxiapp.data.persistance.dao.BookingDao;
-import pt.ipg.taxiapp.utils.MapHelper;
 import pt.ipg.taxiapp.utils.Tools;
 
-public class ActivityBookingActiveDetails extends AppCompatActivity {
+public class ActivityBookingActive extends AppCompatActivity {
 
     private GoogleMap mMap;
     private Polyline polyline;
@@ -60,13 +52,14 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
     // give preparation animation activity transition
     public static void navigate(Activity activity, Booking obj) {
-        Intent intent = new Intent(activity, ActivityBookingActiveDetails.class);
+        Intent intent = new Intent(activity, ActivityBookingActive.class);
         intent.putExtra(EXTRA_OBJECT, obj);
         activity.startActivity(intent);
     }
 
     private Booking booking;
     private BookingViewModel bookingViewModel;
+
     private TaxiViewModel taxiViewModel;
 
     @Override
@@ -132,6 +125,8 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setHideable(false);
 
+
+
         // set callback for changes
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
@@ -154,6 +149,26 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         pickup.setText(booking.pickup);
         destination.setText(booking.destination);
         fare.setText(booking.fare);
+
+        bookingViewModel = ViewModelProviders.of(ActivityBookingActive.this).get(BookingViewModel.class);
+        ((View) findViewById(R.id.but_cancel_active)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelRideClass();
+            }
+
+            private void cancelRideClass() {
+                booking.status="CANCELADO";
+                bookingViewModel.update(booking);
+                onBackPressed();  // volta atrás assim que for possível
+
+                // debug REMOVER
+                Tools.showToastMiddle(getApplicationContext(), " Update sem problemas");
+
+            }
+        });
+
+
     }
 
     private void initMapFragment() {
@@ -194,7 +209,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         displayMarker(destino, false);
 
         drawPolyLine(origem, destino);  // todo .. problema com CC na API google ..
-        Tools.displaySingleCarAroundMarker(ActivityBookingActiveDetails.this, mMap,origem);  // todo ...  vers 0.8 colocar taxi a aproximar
+        Tools.displaySingleCarAroundMarker(ActivityBookingActive.this, mMap,origem);  // todo ...  vers 0.8 colocar taxi a aproximar
     }
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
@@ -263,4 +278,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

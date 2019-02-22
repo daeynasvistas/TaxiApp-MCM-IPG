@@ -426,6 +426,7 @@
             android:padding="@dimen/spacing_large">
 
             <com.balysv.materialripple.MaterialRippleLayout
+                android:id="@+id/but_cancel_active"
                 style="@style/RippleStyleBlack"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"

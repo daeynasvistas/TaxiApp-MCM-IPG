@@ -12,16 +12,15 @@ import android.widget.Toast;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
-import pt.ipg.taxiapp.utils.Tools;
 
 
-public class ActivityBookingHistoryDetails extends AppCompatActivity {
+public class ActivityBookingHistory extends AppCompatActivity {
 
     public static final String EXTRA_OBJECT = "extra.data.BOOKING_OBJ";
 
     // give preparation animation activity transition
     public static void navigate(Activity activity, Booking obj) {
-        Intent intent = new Intent(activity, ActivityBookingHistoryDetails.class);
+        Intent intent = new Intent(activity, ActivityBookingHistory.class);
         intent.putExtra(EXTRA_OBJECT, obj);
         activity.startActivity(intent);
     }
@@ -60,14 +59,14 @@ public class ActivityBookingHistoryDetails extends AppCompatActivity {
         TextView fare = (TextView) findViewById(R.id.fare);
 
         status.setText(booking.status);
-        if (booking.status.equals("FINISHED")) {
+        if (booking.status.equals("FINALIZADO")) {
             status.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_rectangle_finished));
-        } else if (booking.status.equals("CANCELED")) {
+        } else if (booking.status.equals("CANCELADO")) {
             status.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_rectangle_canceled));
         }
 
         payment.setText(booking.payment);
-        booking_code.setText(booking.booking_code);
+        booking_code.setText(String.valueOf(booking.getId()));
         ride_class.setText(booking.ride_class);
         pickup.setText(booking.pickup);
         destination.setText(booking.destination);

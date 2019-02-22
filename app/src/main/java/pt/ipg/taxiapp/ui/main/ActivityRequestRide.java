@@ -20,6 +20,7 @@ import android.widget.ImageView;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
+
 import pt.ipg.taxiapp.utils.Tools;
 
 
@@ -121,7 +122,7 @@ public class ActivityRequestRide extends AppCompatActivity {
                 // guardar booking ACTIVE em room
                 bookingViewModel = ViewModelProviders.of(ActivityRequestRide.this).get(BookingViewModel.class);
                 Booking newBooking = new Booking(
-                        "ACTIVE",
+                        "ATIVO",
                         booking.date,
                         booking.pickup,
                         booking.destination,
@@ -143,7 +144,7 @@ public class ActivityRequestRide extends AppCompatActivity {
 
                 // enviar booking ... TODO alterar para ler room em ActivityBookingActiveDetail .. não é preciso passar
                 Booking obj = booking; // envio
-                ActivityBookingActiveDetails.navigate(ActivityRequestRide.this, obj);
+                ActivityBookingActive.navigate(ActivityRequestRide.this, obj);
                 dialog.dismiss();
                 finish();
             }

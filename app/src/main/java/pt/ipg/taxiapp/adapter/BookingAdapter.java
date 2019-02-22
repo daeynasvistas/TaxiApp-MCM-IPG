@@ -75,11 +75,11 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHold
         holder.payment.setText(b.payment);
 
         holder.status.setText(b.status);
-        if (b.status.equals("ON GOING")) {
+        if (b.status.equals("ATIVO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_ongoing));
-        } else if (b.status.equals("FINISHED")) {
+        } else if (b.status.equals("FINALIZADO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_finished));
-        } else if (b.status.equals("CANCELED")) {
+        } else if (b.status.equals("CANCELADO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_canceled));
         }
 

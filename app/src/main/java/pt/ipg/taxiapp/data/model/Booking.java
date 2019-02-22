@@ -66,6 +66,17 @@ public class Booking implements Serializable {
     public Booking() {
 
     }
+    @Ignore
+    public Booking(String pickup, String destination, String time, String ride_class, String payment, String fare, String origem_string, String destino_string) {
+        this.pickup = pickup;
+        this.destination = destination;
+        this.time = time;
+        this.ride_class = ride_class;
+        this.payment = payment;
+        this.fare = fare;
+        this.origem_string = origem_string;
+        this.destino_string = destino_string;
+    }
 
     //------------------------------------------------------------------
     public int getId() {

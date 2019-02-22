@@ -16,6 +16,7 @@ public class BookingViewModel extends AndroidViewModel {
     private BookingAppRepository repository;
     private LiveData<List<Booking>> allBookings;
     private LiveData<List<Booking>> allActiveBookings;
+    private LiveData<List<Booking>> allFinishedBookings;
 
     public BookingViewModel(@NonNull Application application) {
         super(application);
@@ -23,14 +24,14 @@ public class BookingViewModel extends AndroidViewModel {
         repository = new BookingAppRepository(application);
         allBookings = repository.getAllBookings();
         allActiveBookings = repository.getAllActiveBookings();
+        allFinishedBookings = repository.getAllFinishedBookings();
     }
 
     public void insert(Booking booking) {// long para receber o Id inserido!!!
         repository.insert(booking);
      }
 
-    public void update(Booking booking) {
-        repository.update(booking);
+    public void update(Booking booking) { repository.update(booking);
     }
 
     public void delete(Booking booking) {
@@ -44,7 +45,10 @@ public class BookingViewModel extends AndroidViewModel {
     public LiveData<List<Booking>> getAllBookings() {
         return allBookings;
     }
+    // todos os ativos
     public LiveData<List<Booking>> getAllActiveBookings() {
         return allActiveBookings;
     }
+    // Todos menos ativos
+    public LiveData<List<Booking>> getAllFinishedBookings() { return allFinishedBookings; }
 }

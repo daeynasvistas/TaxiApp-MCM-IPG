@@ -23,7 +23,7 @@
     <color name="grey_text">#222D31</color>
     <color name="price_color">#8BC34A</color>
 
-    <color name="ongoing_color">#F1FAEE</color>
+    <color name="ongoing_color">#ff0008</color>
     <color name="finished_color">#8BC34A</color>
     <color name="canceled_color">#96989A</color>
 
