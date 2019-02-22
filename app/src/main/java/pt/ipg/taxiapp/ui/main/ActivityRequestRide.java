@@ -18,6 +18,12 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
 
@@ -121,6 +127,13 @@ public class ActivityRequestRide extends AppCompatActivity {
                 // Todo ----alterar económico, van para enum -- vers 0.8
                 // guardar booking ACTIVE em room
                 bookingViewModel = ViewModelProviders.of(ActivityRequestRide.this).get(BookingViewModel.class);
+                String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                String toDay = (String) android.text.format.DateFormat.format("dd MMM, yyyy", new Date());
+                String toDayTime = (String) android.text.format.DateFormat.format("hh:mm a", new Date());
+
+
+                booking.date = toDay;
+                booking.time = toDayTime;
                 Booking newBooking = new Booking(
                         "ATIVO",
                         booking.date,

@@ -58,6 +58,10 @@ public class ActivityBookingHistory extends AppCompatActivity {
         TextView destination = (TextView) findViewById(R.id.destination);
         TextView fare = (TextView) findViewById(R.id.fare);
 
+        TextView date = (TextView) findViewById(R.id.date);
+        TextView time = (TextView) findViewById(R.id.time);
+
+
         status.setText(booking.status);
         if (booking.status.equals("FINALIZADO")) {
             status.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_rectangle_finished));
@@ -71,6 +75,8 @@ public class ActivityBookingHistory extends AppCompatActivity {
         pickup.setText(booking.pickup);
         destination.setText(booking.destination);
         fare.setText(booking.fare);
+        date.setText(booking.date);
+        time.setText(booking.time);
     }
 
     @Override

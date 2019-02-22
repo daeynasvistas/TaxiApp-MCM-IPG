@@ -129,19 +129,6 @@ public class Tools {
             item.payment = payment[i];
             item.booking_code = getBookingCode();
 
-            // alterar para ride na base dados room
-            /*
-            if (ride_class.equals("Economy")) {
-                item.fare = "$6.75";
-            } else if (ride_class.equals("Large")) {
-                item.fare = "$10.4";
-            } else if (ride_class.equals("Premium")) {
-                item.fare = "$13.99";
-            } else {
-                item.fare = "$9.25";
-            }
-            */
-
             items.add(item);
         }
         return items;
