@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -60,9 +61,12 @@ import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.adapter.RideAdapter;
 import pt.ipg.taxiapp.data.Constant;
 import pt.ipg.taxiapp.data.model.Booking;
+import pt.ipg.taxiapp.data.model.Booking_view;
 import pt.ipg.taxiapp.data.model.Ride;
 import pt.ipg.taxiapp.data.model.Taxi;
 import pt.ipg.taxiapp.data.model.TaxiPosition;
+import pt.ipg.taxiapp.data.persistance.local.PrefManager;
+import pt.ipg.taxiapp.ui.authentication.LoginActivity;
 import pt.ipg.taxiapp.ui.fragment.FragmentDialogLocation;
 import pt.ipg.taxiapp.utils.CurrentLocationListener;
 import pt.ipg.taxiapp.utils.MapHelper;
@@ -85,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
 
-    private TextView tv_note, tv_promo, tv_payment;
+    private TextView tv_note, tv_promo, tv_payment,tv_class_name;
     private EditText et_pickup, et_destination;
 
     private LatLng origem;
@@ -113,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-
         final UserA adapter = new TaxiAdapter();
        // recyclerView.setAdapter(adapter);
 */
@@ -140,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(@Nullable Location location) {
                 if (location != null) {
 
-                   // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
-                   // Log.d(MainActivity.class.getSimpleName(),
-                   //         "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
-                   //  Toast.makeText(MainActivity.this, "Location Changed", Toast.LENGTH_SHORT).show();
-                   // builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
-                   // builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
+                    // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
+                    // Log.d(MainActivity.class.getSimpleName(),
+                    //         "Location Changed " + location.getLatitude() + " : " + location.getLongitude());
+                    //  Toast.makeText(MainActivity.this, "Location Changed", Toast.LENGTH_SHORT).show();
+                    // builder.setLength(0); // TEST DEBUD .. manter append para guardar rota do utilizado r(se necessário)
+                    // builder.append(location.getLatitude()).append(" : ").append(location.getLongitude()).append("\n");
 
 
                     // ONCHANGE a minha POS
@@ -218,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_booking:
                 startActivity(new Intent(this, ActivityBooking.class));
                 break;
-/**/
+            /**/
             case R.id.nav_about:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("About");
@@ -237,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         mMap = Tools.configBasicGoogleMap(googleMap);
 
 
-       // ONCHANGE taxis num raio 30 KM
+        // ONCHANGE taxis num raio 30 KM
         taxiViewModel = ViewModelProviders.of(MainActivity.this).get(TaxiViewModel.class);
         taxiViewModel.getAllTaxis().observe(MainActivity.this, new Observer<List<Taxi>>() {
             @Override
@@ -249,44 +252,39 @@ public class MainActivity extends AppCompatActivity {
 
                 //List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);
                 List<TaxiPosition> items = Constant.getTaxiArounddb(taxis);  // recebe da base dados room
-              //  mMap.clear(); // ALTERAR!!!!! binding xml devia funcionar
+                //  mMap.clear(); // ALTERAR!!!!! binding xml devia funcionar
 
                 // REVER 0.7 Nãofunciona!!!!!!!! ------------------------------ ToDO
-            //    LatLng point = new LatLng(40.777570, -7.349922);
-            //    LatLng origin = Tools.getRandomLocation(point,2500);
-            //    LatLng destination = Tools.getRandomLocation(point,2500);
-
-                //  drawPolyLine(origin, destination);
+                //    LatLng point = new LatLng(40.777570, -7.349922);
+                //    LatLng origin = Tools.getRandomLocation(point,2500);
+                //    LatLng destination = Tools.getRandomLocation(point,2500);
 
 
                 try {
                     LatLng myLoc = new LatLng(myLocation.getLatitude(), myLocation.getLongitude());
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, myLoc, true));
+
+
                 } catch (Exception e) {
-                   // e.printStackTrace();
+                    // e.printStackTrace();
                 }
+
                 // chamar API para receber taxi num raio de 20Km  Vers 0.6 ---- ToDO
-               Tools.displayCarAroundMarkers(MainActivity.this, mMap, items);
-
-
+                Tools.displayCarAroundMarkers(MainActivity.this, mMap, items);
 
             }
         });
 
 
+
     }
 
-// PROBLEMAS com: E/AndroidRuntime: FATAL EXCEPTION: Rate Limited Dispatcher
+    // PROBLEMAS com: E/AndroidRuntime: FATAL EXCEPTION: Rate Limited Dispatcher
     private void drawPolyLine(LatLng origin, LatLng destination) {
-
-      //  GeoApiContext geoApiContext = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
-     //   geoApiContext.setConnectTimeout(2, TimeUnit.SECONDS);
-     //   geoApiContext.setQueryRateLimit(3);
-/*
-
-       DirectionsApiRequest d = DirectionsApi.newRequest(geoApiContext);
-       d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
-
+        GeoApiContext context = new GeoApiContext().setApiKey(getString(R.string.google_maps_key));
+        context.setConnectTimeout(10, TimeUnit.SECONDS);
+        DirectionsApiRequest d = DirectionsApi.newRequest(context);
+        d.origin(origin).destination(destination).mode(TravelMode.DRIVING).alternatives(false);
         d.setCallback(new PendingResult.Callback<DirectionsResult>() {
             @Override
             public void onResult(DirectionsResult result) {
@@ -306,11 +304,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable e) {
-                Toast.makeText(MainActivity.this, "Polyline problema", Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
- /*       */
+
 
     }
 
@@ -338,6 +337,8 @@ public class MainActivity extends AppCompatActivity {
         tv_note = (TextView) findViewById(R.id.tv_note);
         tv_promo = (TextView) findViewById(R.id.tv_promo);
         tv_payment = (TextView) findViewById(R.id.tv_payment);
+        tv_class_name = (TextView) findViewById(R.id.class_name);
+
 
         et_pickup = (EditText) findViewById(R.id.et_pickup);
         et_destination = (EditText) findViewById(R.id.et_destination);
@@ -366,8 +367,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
         ((View) findViewById(R.id.lyt_request_ride)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -379,8 +378,8 @@ public class MainActivity extends AppCompatActivity {
                 // verificar se existe origem e destino
                 if((origem!=null)&(destino!=null)){
 
-                    obj.payment = "Dinheiro";
-                    obj.ride_class = "ECONÓMICO";
+                    obj.payment = String.valueOf(tv_payment.getText());
+                    obj.ride_class = String.valueOf(tv_class_name.getText());
                     obj.pickup = String.valueOf(et_pickup.getText());
                     obj.destination = String.valueOf(et_destination.getText());
 
@@ -390,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
                     // passar obj
                     ActivityRequestRide.navigate(MainActivity.this, obj);
                 }else{
-                     Toast.makeText(MainActivity.this, "Deve escolher um local de partida e uma localização de destino", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Deve escolher um local de partida e uma localização de destino", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -433,14 +432,14 @@ public class MainActivity extends AppCompatActivity {
         fragment.setOnCallbackResult(new FragmentDialogLocation.CallbackResult() {
             @Override
             public void sendResult(int requestCode, String loc, LatLng pos) {
-              //  LatLng destination = new LatLng(40.827570, -7.349922);
-              //  LatLng origin = new LatLng(40.777570, -7.349922);
+                //  LatLng destination = new LatLng(40.827570, -7.349922);
+                //  LatLng origin = new LatLng(40.777570, -7.349922);
 
                 if (requestCode == 5000) {
                     et_pickup.setText(loc);
                     origem = pos;
                     // fazer cenas aqui -- toDO colocar origem no mapa
-                   // https://stackoverflow.com/questions/25928948/get-lat-lang-from-a-place-id-returned-by-autocomplete-place-api
+                    // https://stackoverflow.com/questions/25928948/get-lat-lang-from-a-place-id-returned-by-autocomplete-place-api
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
 
                 } else if (requestCode == 6000) {
@@ -450,6 +449,10 @@ public class MainActivity extends AppCompatActivity {
                     mMap.addMarker(MapHelper.displayMarker(MainActivity.this, pos, false));
                 }
 
+                if((origem!=null)&(destino!=null)) {
+                    String Time = Tools.getTime(origem, destino);
+                    drawPolyLine(origem, destino); // problema com CC google api
+                }
                 // guardar trajeto TEMPORÁRIO na base dados local room  --- ToDo --> guardar trajeto DB
 
             }

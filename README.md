@@ -19,8 +19,15 @@
 - [x] GeoLocation Places
 - [X] Call taxi interface
 - [X] Detail of Active Ride
-- [ ] Save ride in room
-- [ ] Get Ride history from room
+- [X] Save ride in room
+- [X] Get Ride history from room
+- [ ] Update status "Finished" ride when position are close to destination 
+
+## Vers. O.7
+![screenshot_20190225-203857](https://user-images.githubusercontent.com/2634610/53367428-1388d180-393e-11e9-9c76-fce26a638e2f.png)
+![screenshot_20190225-203923](https://user-images.githubusercontent.com/2634610/53367455-226f8400-393e-11e9-856e-8ee78e6679da.png)
+![screenshot_20190225-204133](https://user-images.githubusercontent.com/2634610/53367478-2f8c7300-393e-11e9-95f3-a622cae5a45e.png)
+![screenshot_20190225-203857 1](https://user-images.githubusercontent.com/2634610/53367508-4df26e80-393e-11e9-9276-2288eafa3017.png)
 
 ## Vers. O.6
 ![screenshot_20190220-163321 1](https://user-images.githubusercontent.com/2634610/53111924-f74bf580-3535-11e9-8be5-33ab3ba420fc.png)
@@ -44,10 +51,6 @@
 
 ## Vers. O.2
 ![screenshot_20190121-160738](https://user-images.githubusercontent.com/2634610/51485771-d0fc3400-1d96-11e9-87d6-f75943d9c81c.png)
-
-## Vers. O.2
-![screenshot_20190121-160738](https://user-images.githubusercontent.com/2634610/51485771-d0fc3400-1d96-11e9-87d6-f75943d9c81c.png)
-
 
 ## Vers. O.1
 ![51442393-0db32700-1cd4-11e9-9051-6ffce9c99b36](https://user-images.githubusercontent.com/2634610/51443543-304c3c80-1ce2-11e9-8b4d-79233cf034a1.png)

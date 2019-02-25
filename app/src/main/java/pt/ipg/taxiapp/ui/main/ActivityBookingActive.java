@@ -1,6 +1,7 @@
 package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
 import pt.ipg.taxiapp.utils.Tools;
 
-public class ActivityBookingActiveDetails extends AppCompatActivity {
+public class ActivityBookingActive extends AppCompatActivity {
 
     private GoogleMap mMap;
     private Polyline polyline;
@@ -51,12 +52,15 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
     // give preparation animation activity transition
     public static void navigate(Activity activity, Booking obj) {
-        Intent intent = new Intent(activity, ActivityBookingActiveDetails.class);
+        Intent intent = new Intent(activity, ActivityBookingActive.class);
         intent.putExtra(EXTRA_OBJECT, obj);
         activity.startActivity(intent);
     }
 
     private Booking booking;
+    private BookingViewModel bookingViewModel;
+
+    private TaxiViewModel taxiViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,30 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
         // get extra object
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
+        // substituir por room database
+
+
+/* ----- DEBUG ----  APAGAR ------
+
+        taxiViewModel = ViewModelProviders.of(this).get(TaxiViewModel.class);
+        taxiViewModel.getAllTaxis().observe(this, new Observer<List<Taxi>>() {
+            @Override
+            public void onChanged(@Nullable List<Taxi> taxis) {
+                Tools.showToastMiddle(getApplicationContext(), "Change");
+                try {
+
+                } catch (Exception e) {
+                    // e.printStackTrace();
+                }
+
+            }
+        });
+        taxiViewModel.insert(new Taxi("OK","Android@ept.pt","foto(alterar)",0,40.777570, -7.349922));
+//------------------  FIM DEBUG APAGAR ------
+
+*/
+        //Tools.showToastMiddle(getApplicationContext(), "Booking inserido");
+        //--------------------------------------------  insert FIM ---------------------
 
         initMapFragment();
         initToolbar();
@@ -83,7 +111,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
 
 
     private void initComponent() {
-        //TextView status = (TextView) findViewById(R.id.status);
+        TextView status = (TextView) findViewById(R.id.status);
         TextView payment = (TextView) findViewById(R.id.payment);
         TextView ride_class = (TextView) findViewById(R.id.ride_class);
         TextView pickup = (TextView) findViewById(R.id.pickup);
@@ -96,6 +124,8 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         bottomSheetBehavior = BottomSheetBehavior.from(llBottomSheet);
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         bottomSheetBehavior.setHideable(false);
+
+
 
         // set callback for changes
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
@@ -119,6 +149,26 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         pickup.setText(booking.pickup);
         destination.setText(booking.destination);
         fare.setText(booking.fare);
+
+        bookingViewModel = ViewModelProviders.of(ActivityBookingActive.this).get(BookingViewModel.class);
+        ((View) findViewById(R.id.but_cancel_active)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelRideClass();
+            }
+
+            private void cancelRideClass() {
+                booking.status="CANCELADO";
+                bookingViewModel.update(booking);
+                onBackPressed();  // volta atrás assim que for possível
+
+                // debug REMOVER
+                Tools.showToastMiddle(getApplicationContext(), " Update sem problemas");
+
+            }
+        });
+
+
     }
 
     private void initMapFragment() {
@@ -159,7 +209,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         displayMarker(destino, false);
 
         drawPolyLine(origem, destino);  // todo .. problema com CC na API google ..
-        Tools.displaySingleCarAroundMarker(ActivityBookingActiveDetails.this, mMap,origem);  // todo ...  vers 0.8 colocar taxi a aproximar
+        Tools.displaySingleCarAroundMarker(ActivityBookingActive.this, mMap,origem);  // todo ...  vers 0.8 colocar taxi a aproximar
     }
 
     private void drawPolyLine(LatLng origin, LatLng destination) {
@@ -228,4 +278,7 @@ public class ActivityBookingActiveDetails extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
 }

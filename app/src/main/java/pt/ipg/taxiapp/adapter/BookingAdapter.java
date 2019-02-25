@@ -13,7 +13,7 @@ import java.util.List;
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
 
-public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.ViewHolder> {
+public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.ViewHolder> {
 
     private Context ctx;
     private List<Booking> items = new ArrayList<>();
@@ -51,13 +51,13 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
 
     }
 
-    public BookingListAdapter(Context ctx, List<Booking> items) {
+    public BookingAdapter(Context ctx, List<Booking> items) {
         this.ctx = ctx;
         this.items = items;
     }
 
     @Override
-    public BookingListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BookingAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_booking, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -75,11 +75,11 @@ public class BookingListAdapter extends RecyclerView.Adapter<BookingListAdapter.
         holder.payment.setText(b.payment);
 
         holder.status.setText(b.status);
-        if (b.status.equals("ON GOING")) {
+        if (b.status.equals("ATIVO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_ongoing));
-        } else if (b.status.equals("FINISHED")) {
+        } else if (b.status.equals("FINALIZADO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_finished));
-        } else if (b.status.equals("CANCELED")) {
+        } else if (b.status.equals("CANCELADO")) {
             holder.status.setBackgroundDrawable(ctx.getResources().getDrawable(R.drawable.shape_rectangle_canceled));
         }
 

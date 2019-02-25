@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.remote.DefaultResponse;
+import pt.ipg.taxiapp.data.persistance.local.PrefManager;
 import pt.ipg.taxiapp.data.remote.Client;
 import pt.ipg.taxiapp.ui.main.MainActivity;
 import retrofit2.Call;
@@ -250,21 +251,13 @@ public class RegisterActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-
-
-            // TODO: register the new account here.
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-
             Call<DefaultResponse> call = Client
                     .getInstance().getApi().createUser(mEmail, mPassword, mUsername);
 
             call.enqueue(new Callback<DefaultResponse>() {
                 @Override
                 public void onResponse(Call<DefaultResponse> call, Response<DefaultResponse> response) {
+
                     if (response.isSuccessful()) {
                         response.body(); // do something with that
                         DefaultResponse DefaultResponse = response.body();
@@ -275,13 +268,22 @@ public class RegisterActivity extends AppCompatActivity {
                     DefaultResponse DefaultResponse = response.body();
                     mAuthTask = null;
                     if (response.code() ==200) {
-                       // PrefManager.getInstance(RegisterActivity.this)
-                        //        .saveUser(DefaultResponse.getUser(), DefaultResponse.getId());// (User, token)
+                        /*Response Body
+                            {
+                              "realm": "ipg",
+                              "username": "computador",
+                              "email": "computador@gmail.com",
+                              "emailVerified": false,
+                              "id": "5c6e79af4bfc15002b0c222c"
+                            }*/
+                        // PrefManager.getInstance(RegisterActivity.this)
+                        //        .saveUser(DefaultResponse.getUsername(), DefaultResponse.getId());// (User, token)
 
                         // debug -----
-                        //String token = registerResponse.getId();
+                        //String token = DefaultResponse.getId();
                         //User user =registerResponse.getUser();
 
+                        // vai para login em vex de entrar logo (melhor e mais simples)
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         Toast.makeText(RegisterActivity.this, "OK, utilizador criado", Toast.LENGTH_LONG).show();
                         // --------------------------
@@ -308,6 +310,15 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+
+            // TODO: register the new account here.
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+
+
 
 
 

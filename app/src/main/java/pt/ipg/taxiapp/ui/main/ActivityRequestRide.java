@@ -2,6 +2,7 @@ package pt.ipg.taxiapp.ui.main;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +18,15 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import pt.ipg.taxiapp.R;
 import pt.ipg.taxiapp.data.model.Booking;
+
 import pt.ipg.taxiapp.utils.Tools;
 
 
@@ -37,6 +45,8 @@ public class ActivityRequestRide extends AppCompatActivity {
     }
 
     private Booking booking;
+    private BookingViewModel bookingViewModel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +57,7 @@ public class ActivityRequestRide extends AppCompatActivity {
         booking = (Booking) getIntent().getSerializableExtra(EXTRA_OBJECT);
 
         initComponent();
-        // todo fazar lado do taxi vers 1.0
+        // todo fazer lado do taxi vers 1.0
         scheduleRequest();
 
         // for system bar in lollipop
@@ -106,8 +116,48 @@ public class ActivityRequestRide extends AppCompatActivity {
         ((Button) dialog.findViewById(R.id.bt_ok)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // receber taxi que aceitou a viagem
+                String matriculaTaxi = "00-AA-00";
+                String modeloTaxi = "Audi A4 preto";
+                String condutorTaxi = "Cristiano Ronaldo";
+                String imageTaxi = "profile.png";
+                // criar booking historico
+                // Todo --- alterar Status, String não parece correcto -- vers 0.8
+                // Todo ----alterar económico, van para enum -- vers 0.8
+                // guardar booking ACTIVE em room
+                bookingViewModel = ViewModelProviders.of(ActivityRequestRide.this).get(BookingViewModel.class);
+                String mydate = java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+                String toDay = (String) android.text.format.DateFormat.format("dd MMM, yyyy", new Date());
+                String toDayTime = (String) android.text.format.DateFormat.format("hh:mm a", new Date());
+
+
+                booking.date = toDay;
+                booking.time = toDayTime;
+                Booking newBooking = new Booking(
+                        "ATIVO",
+                        booking.date,
+                        booking.pickup,
+                        booking.destination,
+                        booking.time,
+                        booking.ride_class,
+                        booking.payment,
+                        booking.fare,
+                        booking.booking_code,
+                        booking.origem_string,
+                        booking.destino_string,
+                        matriculaTaxi,
+                        modeloTaxi,
+                        condutorTaxi,
+                        imageTaxi);
+
+                bookingViewModel.insert(newBooking);
+                Tools.showToastMiddle(getApplicationContext(), "Booking inserido em room");
+
+
+                // enviar booking ... TODO alterar para ler room em ActivityBookingActiveDetail .. não é preciso passar
                 Booking obj = booking; // envio
-                ActivityBookingActiveDetails.navigate(ActivityRequestRide.this, obj);
+                ActivityBookingActive.navigate(ActivityRequestRide.this, obj);
                 dialog.dismiss();
                 finish();
             }

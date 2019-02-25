@@ -35,8 +35,8 @@
         <activity android:name=".ui.authentication.RegisterActivity" />
         <activity android:name=".ui.main.ActivityRequestRide" />
         <activity android:name=".ui.main.ActivityBooking" />
-        <activity android:name=".ui.main.ActivityBookingHistoryDetails" />
-        <activity android:name=".ui.main.ActivityBookingActiveDetails" />
+        <activity android:name=".ui.main.ActivityBookingHistory" />
+        <activity android:name=".ui.main.ActivityBookingActive" />
     </application>
 
 </manifest>
