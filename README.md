@@ -60,6 +60,9 @@
 ![database_empty](https://user-images.githubusercontent.com/2634610/51443548-3b9f6800-1ce2-11e9-9872-a53a5e35b1da.PNG)
 ![batabase_0 2](https://user-images.githubusercontent.com/2634610/51443547-3b9f6800-1ce2-11e9-8332-9e1c5439f247.PNG)
 
+## Architecture
+![arch_f](https://user-images.githubusercontent.com/2634610/53451759-7bf7b180-3a17-11e9-9c01-431fe3f3b53f.PNG)
+
 
 ## Test MVVM with Room and WebserviceAPI
 ![arch](https://taxi-images.githubusercontent.com/2634610/51175082-3771e580-18b1-11e9-89a0-a46adc9ca85f.png)
