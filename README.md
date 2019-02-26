@@ -63,6 +63,3 @@
 ## Architecture
 ![arch_f](https://user-images.githubusercontent.com/2634610/53451759-7bf7b180-3a17-11e9-9c01-431fe3f3b53f.PNG)
 
-
-## Test MVVM with Room and WebserviceAPI
-![arch](https://taxi-images.githubusercontent.com/2634610/51175082-3771e580-18b1-11e9-89a0-a46adc9ca85f.png)
