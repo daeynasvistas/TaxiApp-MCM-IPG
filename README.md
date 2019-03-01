@@ -24,7 +24,7 @@
 - [ ] Update status "Finished" ride when position are close to destination 
 
 ## Vers. O.8
-![screenshot_20190301-111724](https://user-images.githubusercontent.com/2634610/53635320-9ea2e980-3c14-11e9-9862-88f61b644d39.png)
+![screenshot_20190301-111724](https://user-images.githubusercontent.com/2634610/53635404-e6297580-3c14-11e9-86f1-8f62c12b387c.png)
 
 ## Vers. O.7
 ![screenshot_20190225-203857](https://user-images.githubusercontent.com/2634610/53367428-1388d180-393e-11e9-9c76-fce26a638e2f.png)
