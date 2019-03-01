@@ -23,6 +23,9 @@
 - [X] Get Ride history from room
 - [ ] Update status "Finished" ride when position are close to destination 
 
+## Vers. O.8
+![screenshot_20190301-111724](https://user-images.githubusercontent.com/2634610/53635320-9ea2e980-3c14-11e9-9862-88f61b644d39.png)
+
 ## Vers. O.7
 ![screenshot_20190225-203857](https://user-images.githubusercontent.com/2634610/53367428-1388d180-393e-11e9-9c76-fce26a638e2f.png)
 ![screenshot_20190225-203923](https://user-images.githubusercontent.com/2634610/53367455-226f8400-393e-11e9-856e-8ee78e6679da.png)
@@ -34,7 +37,6 @@
 ![screenshot_20190220-162936](https://user-images.githubusercontent.com/2634610/53111941-0763d500-3536-11e9-8dc6-4ea9f7da1e3f.png)
 ![screenshot_20190220-162950](https://user-images.githubusercontent.com/2634610/53111963-18ace180-3536-11e9-99e1-ff9132bbae89.png)
 ![screenshot_20190220-162956](https://user-images.githubusercontent.com/2634610/53111992-2c584800-3536-11e9-869f-15e1d00a53f0.png)
-
 
 ## Vers. O.5
 ![screenshot_20190203-182334](https://user-images.githubusercontent.com/2634610/52180676-34e41b00-27e1-11e9-99f7-4f1b16ef5c1b.png)
