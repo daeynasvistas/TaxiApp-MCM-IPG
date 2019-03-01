@@ -47,7 +47,7 @@
                         android:paddingLeft="@dimen/spacing_large"
                         android:paddingRight="@dimen/spacing_large"
                         android:paddingTop="@dimen/spacing_regular"
-                        android:text="Vers.0.6"
+                        android:text="Vers.0.7"
                         android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:textColor="@color/grey_text"
                         android:textStyle="bold" />

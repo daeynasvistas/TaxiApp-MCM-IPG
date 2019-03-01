@@ -145,9 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
-        }
-
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {// Check for a valid password, if the user entered one.
+        }else if (isPasswordValid(password)) {// Check for a valid password, if the user entered one.
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
