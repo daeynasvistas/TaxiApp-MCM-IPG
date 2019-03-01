@@ -60,6 +60,15 @@
         <item>FINISHED</item>
         <item>FINISHED</item>
     </string-array>
+    <string-array name="booking_date">
+        <item>7 April 2018</item>
+
+        <item>10 April 2018</item>
+        <item>13 April 2018</item>
+        <item>22 April 2018</item>
+        <item>8 May 2018</item>
+        <item>11 May 2018</item>
+    </string-array>
 
 
 

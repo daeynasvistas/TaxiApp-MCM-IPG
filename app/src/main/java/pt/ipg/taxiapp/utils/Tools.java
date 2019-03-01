@@ -90,7 +90,7 @@ public class Tools {
         }
     }
 
-    public static void setSystemBarLightFragment(DialogFragment dialogFragment) {
+   public static void setSystemBarLightFragment(DialogFragment dialogFragment) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 View view = dialogFragment.getDialog().getWindow().getDecorView();
@@ -101,12 +101,12 @@ public class Tools {
         } catch (Exception e) {
         }
     }
-
+ /*
     public static List<Booking> getBookingActive(Context ctx) {
-        return getBooking(ctx).subList(0, 1);
+      //  return getBooking(ctx).subList(0, 1);
     }
 
-   private static List<Booking> getBooking(Context ctx) {
+  private static List<Booking> getBooking(Context ctx) {
         List<Booking> items = new ArrayList<>();
         String[] status = ctx.getResources().getStringArray(R.array.booking_status);
         String[] date = ctx.getResources().getStringArray(R.array.booking_date);
@@ -140,7 +140,7 @@ public class Tools {
         String[] status = ctx.getResources().getStringArray(R.array.booking_status);
         return getBooking(ctx).subList(1, status.length);
     }
-
+*/
 
     //-------------------------- Vers 0.2 ---------------------------
 

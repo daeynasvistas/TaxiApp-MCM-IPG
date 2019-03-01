@@ -8,11 +8,12 @@
 - [x] LoginView
 - [X] Better LoginView
 - [ ] SettingView
+- [ ] User Profile
 - [x] MainView
 - [x] ApiService
 - [x] RegisterView (bug username need to be unique)
 - [x] Login Flow API (with token save)
-- [ ] GetTaxis from API
+- [x] GetTaxis from API
 - [ ] Sync all values with API
 - [x] Location working
 - [x] MyPosition onStart 
@@ -22,6 +23,10 @@
 - [X] Save ride in room
 - [X] Get Ride history from room
 - [ ] Update status "Finished" ride when position are close to destination 
+- [X] Internationalization (I18N) - Português(Original language), french, english, spanish
+- [ ] Send booking to all taxis that are near start point
+
+## Vers. O.8
 
 ## Vers. O.8
 ![screenshot_20190301-111724](https://user-images.githubusercontent.com/2634610/53635404-e6297580-3c14-11e9-86f1-8f62c12b387c.png)
