@@ -26,7 +26,6 @@
 - [X] Internationalization (I18N) - Português(Original language), french, english, spanish
 - [ ] Send booking to all taxis that are near start point
 
-## Vers. O.8
 
 ## Vers. O.8
 ![screenshot_20190301-111724](https://user-images.githubusercontent.com/2634610/53635404-e6297580-3c14-11e9-86f1-8f62c12b387c.png)
